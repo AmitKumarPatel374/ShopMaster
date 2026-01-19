@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { User, Mail, Phone, Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import apiInstance from '../config/apiInstance';
 import { RegisterUserHook } from "../hooks/AuthHooks";
+import { usercontext } from "../context/DataContext"
 
 const RegistrationForm = () => {
   
@@ -14,12 +15,15 @@ const RegistrationForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const mutation = RegisterUserHook();
+  const { setToken, setRole, setContact } = useContext(usercontext)
 
   const onSubmit = async (data) => {
      try {
       const response = await apiInstance.post("/auth/register", data);
       if (response) toast.success(response?.data?.message);
-      navigate("/login");
+      console.log(data.email);
+      setContact(data.email);
+      navigate("/verify-otp")
     } catch (error) {
       toast.error(error?.response?.data?.message || "Registration failed.");
     }

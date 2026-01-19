@@ -21,10 +21,11 @@ const LoginForm = () => {
     try {
       let response = await apiInstance.post("/auth/login", data)
       if (response?.status === 200) {
-        toast.success(response?.data?.message || "OTP sended please verify!")
-
-        setContact(data.contact)
-        navigate("/verify-otp")
+        console.log(response);
+        toast.success(response?.data?.message || "login successfully!")
+        setToken(true);
+        setRole(response.data.user.role);
+        navigate("/")
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "otp sended failed.")
