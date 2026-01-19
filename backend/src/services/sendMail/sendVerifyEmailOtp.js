@@ -4,6 +4,7 @@ const BREVO_API_KEY = process.env.BREVO_API_KEY
 const BREVO_URL = "https://api.brevo.com/v3/smtp/email"
 
 const APP_NAME = "ShopMaster"
+const FRONTEND_URL = "https://shopmaster.com" // change if needed
 const LOGO_URL = "https://ik.imagekit.io/amit374/n23/myLogo.png?updatedAt=1762869433221"
 
 export async function sendVerifyEmailOtp({
@@ -23,72 +24,91 @@ export async function sendVerifyEmailOtp({
         name: APP_NAME,
         email: process.env.EMAIL,
       },
-      to: [{ email }],
+      to: [{ email, name: username || "User" }],
       subject: `Verify your email | ${APP_NAME}`,
-      htmlContent: `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Email Verification Code</title>
-</head>
-<body style="margin:0;padding:0;background-color:#f5f7fa;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-  <div style="max-width:600px;margin:30px auto;background:#ffffff;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.05);overflow:hidden;">
 
-    <!-- Header -->
-    <div style="background:linear-gradient(90deg,#3b82f6,#06b6d4);padding:20px;text-align:center;">
+      htmlContent: `
+<div style="font-family: Inter, Arial, sans-serif; background:#ffffff; padding:40px;">
+  <div style="max-width:620px; margin:0 auto; color:#111827;">
+
+    <!-- Brand -->
+    <div style="margin-bottom:24px;">
       <img 
         src="${LOGO_URL}" 
         alt="${APP_NAME} Logo" 
-        style="width:80px;height:80px;border-radius:50%;margin-bottom:10px;background:white;padding:5px;box-shadow:0 0 8px rgba(0,0,0,0.1);" 
+        style="width:64px; height:64px; border-radius:50%; margin-bottom:12px;" 
       />
-      <h2 style="color:white;font-size:22px;font-weight:600;margin:0;">
-        ${APP_NAME}
-      </h2>
-    </div>
-
-    <!-- Content -->
-    <div style="padding:30px;color:#333333;">
-      <h1 style="font-size:20px;margin-bottom:10px;">
-        Hello ${username},
-      </h1>
-
-      <p style="line-height:1.6;margin-bottom:20px;">
-        Use the one-time verification code below to verify your email address. 
-        This code will expire in <strong>${expiryMinutes} minutes</strong>.
-      </p>
-
-      <div style="text-align:center;">
-        <div style="
-          display:inline-block;
-          background-color:#f1f5f9;
-          border-radius:8px;
-          padding:14px 22px;
-          font-size:26px;
-          letter-spacing:6px;
-          font-weight:bold;
-          color:#0f172a;
-          text-align:center;
-          margin:10px 0;
-        ">
-          ${otp}
-        </div>
-      </div>
-
-      <p style="margin-top:20px;">
-        If you did not request this verification, please ignore this email.
+      <p style="font-size:14px; color:#6b7280; margin:0;">
+        ${APP_NAME} Security
       </p>
     </div>
+
+    <!-- Heading -->
+    <h1 style="font-size:22px; font-weight:600; margin:0 0 20px;">
+      Verify your email address
+    </h1>
+
+    <!-- Body -->
+    <p style="font-size:15px; line-height:1.7; color:#374151; margin-bottom:24px;">
+      Hello ${username || "User"},<br/><br/>
+      To complete your registration, please use the verification code below.
+      This code will expire in <strong>${expiryMinutes} minutes</strong>.
+    </p>
+
+    <!-- OTP Box -->
+    <div style="
+      border-left:4px solid #111827;
+      padding:18px 24px;
+      margin-bottom:32px;
+      background:#fafafa;
+    ">
+      <p style="margin:0; font-size:13px; color:#6b7280;">
+        Your verification code
+      </p>
+      <p style="
+        margin:8px 0 0;
+        font-size:28px;
+        font-weight:600;
+        letter-spacing:6px;
+        color:#111827;
+      ">
+        ${otp}
+      </p>
+    </div>
+
+    <p style="font-size:14px; color:#374151; line-height:1.6;">
+      If you did not request this email, you can safely ignore it.
+    </p>
+
+    <!-- CTA -->
+    <a href="${FRONTEND_URL}"
+       style="
+         display:inline-block;
+         margin-top:24px;
+         padding:12px 28px;
+         border:1.5px solid #111827;
+         color:#111827;
+         text-decoration:none;
+         font-size:14px;
+         font-weight:500;
+         border-radius:6px;
+       ">
+      Go to ${APP_NAME}
+    </a>
+
+    <hr style="border:none; border-top:1px solid #e5e7eb; margin:40px 0;" />
 
     <!-- Footer -->
-    <div style="font-size:13px;color:#777;text-align:center;padding:20px;background-color:#f9fafb;">
-      © ${new Date().getFullYear()} ${APP_NAME}. All rights reserved.
-    </div>
+    <p style="font-size:13px; color:#6b7280; line-height:1.6;">
+      Best regards,<br/>
+      <strong style="color:#111827;">${APP_NAME} Team</strong><br/>
+      <span style="font-size:12px;">
+        This is an automated security email. Please do not reply.
+      </span>
+    </p>
 
   </div>
-</body>
-</html>
+</div>
       `,
     }
 
