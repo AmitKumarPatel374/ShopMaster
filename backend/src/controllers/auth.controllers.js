@@ -390,6 +390,17 @@ const updatePasswordController = async (req, res) => {
       }
     )
 
+    const email = updatedPassUser.email
+    const name = updatedPassUser.fullname
+
+    console.log(email,name);
+    
+
+    await emailQueue.add("password-updated",{
+      email,
+      name
+    })
+
     return res.status(200).json({
       message: "password updated successfully!",
       upadatedUser: updatedPassUser,
