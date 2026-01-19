@@ -2,12 +2,15 @@ import "dotenv/config"
 import { Worker } from "bullmq"
 import connection from "../config/bullmq-connection.js"
 import { sendVerifyEmailOtp } from "../services/sendMail/sendVerifyEmailOtp.js"
+import { sendPasswordResetEmail } from "../services/sendMail/sendPasswordResetEmail.js"
 
 new Worker(
   "email-queue",
   async (job) => {
     if (job.name === "verify-email") {
       await sendVerifyEmailOtp(job.data)
+    }else if(job.name=="reset-password"){
+      await sendPasswordResetEmail(job.data);
     }else {
       console.warn("⚠️ Unknown job type:", job.name)
     }

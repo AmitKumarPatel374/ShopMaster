@@ -317,9 +317,15 @@ const forgotPasswordController = async (req, res) => {
     const baseUrl = process.env.SERVER_ORIGIN
     let resetLink = `${baseUrl}/auth/reset-password/${resetToken}`
 
-    let resetTemp = resePassTemp(user.fullname, resetLink)
+    // let resetTemp = resePassTemp(user.fullname, resetLink)
 
-    await sendMail(email, "Reset your Password", resetTemp)
+    // await sendMail(email, "Reset your Password", resetTemp)
+    const fullname = user.fullname
+    await emailQueue.add("reset-password", {
+      email,
+      fullname,
+      resetLink,
+    })
 
     return res.status(201).json({
       message: "reset link sended at your registered email!",
