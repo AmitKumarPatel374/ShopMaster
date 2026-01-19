@@ -1,18 +1,21 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { toast } from "react-toastify";
-import apiInstance from "../config/apiInstance";
-import { usercontext } from "../context/DataContext";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { toast } from "react-toastify"
+import apiInstance from "../config/apiInstance"
+import { usercontext } from "../context/DataContext"
+import { useNavigate } from "react-router-dom"
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
 const VerifyContact = () => {
-  const [otp, setOtp] = useState("");
-  const { setToken, setRole, contact } = useContext(usercontext);
-  const navigate = useNavigate();
-  const containerRef = useRef(null);
+  const [otp, setOtp] = useState("")
+  const { setToken, setRole, contact } = useContext(usercontext)
+  const navigate = useNavigate()
+  const containerRef = useRef(null)
+
+  const [cooldown, setCooldown] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   // GSAP Animations
   useEffect(() => {
@@ -21,7 +24,7 @@ const VerifyContact = () => {
         ".otp-hero",
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", stagger: 0.2 }
-      );
+      )
 
       gsap.to(".otp-icon", {
         y: -8,
@@ -29,27 +32,52 @@ const VerifyContact = () => {
         yoyo: true,
         ease: "sine.inOut",
         duration: 2.5,
-      });
-    }, containerRef);
+      })
+    }, containerRef)
 
-    return () => ctx.revert();
-  }, []);
+    return () => ctx.revert()
+  }, [])
 
   const handleVerify = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const response = await apiInstance.post("/auth/verify-otp", { contact, otp });
+      const response = await apiInstance.post("/auth/verify-otp", { contact, otp })
       if (response?.status === 200) {
-        toast.success(response?.data?.message || "OTP verified successfully!");
-        setToken(true);
-        setRole(response.data.user.role);
-        navigate("/");
+        toast.success(response?.data?.message || "OTP verified successfully!")
+        setToken(true)
+        setRole(response.data.user.role)
+        navigate("/")
       }
     } catch (err) {
-      console.log("Error in OTP verification →", err);
-      toast.error(err?.response?.data?.message || "OTP verification failed.");
+      console.log("Error in OTP verification →", err)
+      toast.error(err?.response?.data?.message || "OTP verification failed.")
     }
-  };
+  }
+
+  const handleResendOTP = async () => {
+    try {
+      setLoading(true)
+      const res = await apiInstance.post("/auth/resend-otp", { contact })
+
+      toast.success(res.data.message)
+
+      setCooldown(60) // 60 sec lock
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Failed to resend OTP")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (!cooldown) return
+
+    const timer = setInterval(() => {
+      setCooldown((c) => c - 1)
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [cooldown])
 
   return (
     <div
@@ -74,12 +102,10 @@ const VerifyContact = () => {
             />
           </svg>
         </div>
-        <h2 className="otp-hero text-3xl sm:text-4xl font-bold mb-2">
-          Verify Your Email
-        </h2>
+        <h2 className="otp-hero text-3xl sm:text-4xl font-bold mb-2">Verify Your Email</h2>
         <p className="otp-hero text-gray-600 max-w-md">
-          We’ve sent a 6-digit OTP to <span className="font-semibold">{contact}</span>.
-          Please enter it below to complete your login.
+          We’ve sent a 6-digit OTP to <span className="font-semibold">{contact}</span>. Please enter
+          it below to complete your login.
         </p>
       </div>
 
@@ -88,9 +114,7 @@ const VerifyContact = () => {
         onSubmit={handleVerify}
         className="otp-hero bg-white shadow-xl rounded-3xl p-8 w-full max-w-md border border-gray-200"
       >
-        <label className="block text-sm font-medium text-gray-600 mb-3">
-          Enter OTP
-        </label>
+        <label className="block text-sm font-medium text-gray-600 mb-3">Enter OTP</label>
 
         <input
           type="text"
@@ -110,13 +134,20 @@ const VerifyContact = () => {
 
         <div className="text-center mt-4 text-sm text-gray-500">
           Didn’t receive the code?{" "}
-          <span className="text-blue-600 font-semibold cursor-pointer hover:underline">
-            Resend OTP
-          </span>
+          <button
+            type="button"
+            disabled={cooldown > 0 || loading}
+            onClick={handleResendOTP}
+            className={`font-semibold transition ${
+              cooldown > 0 ? "text-gray-400 cursor-not-allowed" : "text-blue-600 hover:underline"
+            }`}
+          >
+            {loading ? "Sending..." : cooldown > 0 ? `Resend in ${cooldown}s` : "Resend OTP"}
+          </button>
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default VerifyContact;
+export default VerifyContact
