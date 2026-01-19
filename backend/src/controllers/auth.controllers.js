@@ -9,6 +9,7 @@ const { getCookieOptions, getClearCookieOptions } = require("../utils/cookie.uti
 const otpVerifyTemp = require("../utils/email.verify.temp")
 const { sendSMS } = require("../services/message.service")
 const { emailQueue } = require("../queues/emailQueue")
+const TempUserModel = require("../model/tempUser.model")
 
 const registerController = async (req, res) => {
   try {
@@ -27,21 +28,38 @@ const registerController = async (req, res) => {
         message: "User already exists",
       })
 
-    let newUser = await UserModel.create({
-      fullname,
-      username,
+    const otp = Math.floor(100000 + Math.random() * 900000).toString()
+    const otpExpiry = new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    await TempUserModel.findOneAndUpdate(
+      { email },
+      {
+        fullname,
+        username,
+        email,
+        mobile,
+        password:hashedPassword,
+        role,
+        otp,
+        otpExpiry,
+      },
+      { upsert: true }
+    )
+
+    await emailQueue.add("verify-email", {
       email,
-      mobile,
-      password,
-      role,
+      username,
+      otp,
+      otpExpiry,
     })
 
     // let token = newUser.generateToken();
     // res.cookie("token", token, getCookieOptions());
 
     return res.status(201).json({
-      message: "user registered",
-      user: newUser,
+      message: "OTP sent to your email. please verify!",
     })
   } catch (error) {
     console.log(error)
@@ -63,7 +81,9 @@ const loginController = async (req, res) => {
     }
 
     const isEmail = contact.includes("@")
-    const user = isEmail ? await UserModel.findOne({ email:contact }) : await UserModel.findOne({ mobile:contact })
+    const user = isEmail
+      ? await UserModel.findOne({ email: contact })
+      : await UserModel.findOne({ mobile: contact })
 
     if (!user)
       return res.status(404).json({
@@ -87,14 +107,14 @@ const loginController = async (req, res) => {
 
     // let verifyTemp = otpVerifyTemp(user.username, otp)
     if (isEmail) {
-      const email = contact;
-      const username=user.fullname;
-       await emailQueue.add("verify-email", {
-      email,
-      username,
-      otp,
-      otpExpiry,
-    })
+      const email = contact
+      const username = user.fullname
+      await emailQueue.add("verify-email", {
+        email,
+        username,
+        otp,
+        otpExpiry,
+      })
     } else {
       await sendSMS(`+91${contact}`, `Your OTP is ${otp}`)
     }
@@ -114,39 +134,43 @@ const loginController = async (req, res) => {
 
 const verifyEmailByOTPController = async (req, res) => {
   try {
-    const { contact, otp } = req.body
-    const isEmail = contact.includes("@")
-    const user = isEmail
-      ? await UserModel.findOne({ email: contact })
-      : await UserModel.findOne({ phone: contact })
+    const { email, otp } = req.body
 
-    if (!user) return res.status(404).json({ message: "user not found" })
-    if (user.otp !== otp) return res.status(400).json({ message: "Invalid OTP" })
-    if (user.otpExpiry < Date.now()) return res.status(400).json({ message: "OTP expired" })
+    const tempUser = await TempUserModel.findOne({ email })
 
-    // OTP verified → Clear OTP fields
-    user.otp = null
-    user.otpExpiry = null
-    await user.save()
+    if (!tempUser) {
+      return res.status(400).json({ message: "OTP expired" })
+    }
 
-    let token = user.generateToken()
+    if (tempUser.otpExpiry < Date.now()) {
+      await TempUserModel.deleteOne({ email })
+      return res.status(400).json({ message: "OTP expired" })
+    }
+
+    if (tempUser.otp !== otp) {
+      return res.status(400).json({ message: "Invalid OTP" })
+    }
+
+    let newUser = await UserModel.create({
+      fullname:tempUser.fullname,
+      username:tempUser.username,
+      email:tempUser.email,
+      mobile:tempUser.mobile,
+      password:tempUser.password,
+      role:tempUser.role,
+      isEmailVerified:true
+    })
+
+    let token = newUser.generateToken()
     console.log("token generated:", token ? "yes" : "no")
-    console.log("Environment:", process.env.NODE_ENV || "development")
-    console.log(
-      "Cookie secure:",
-      process.env.NODE_ENV === "production" ? "true (HTTPS)" : "false (HTTP)"
-    )
     res.cookie("token", token, getCookieOptions())
 
-    // Debug logging in development
-    if (process.env.NODE_ENV !== "production") {
-      console.log("Cookie set with options:", getCookieOptions())
-    }
+    await TempUserModel.deleteOne({email});
 
     return res.status(200).json({
       message: "OTP verified successfully",
       token,
-      user: user,
+      user: newUser,
     })
   } catch (error) {
     console.log("error in vrification->", error)
@@ -376,9 +400,10 @@ const facebookController = async (req, res) => {
     // console.log("user->",req.user);
     const profile = req.user
 
-    let email = profile.emails && profile.emails[0]?.value
+    let email =
+      profile.emails && profile.emails[0]?.value
         ? profile.emails[0].value
-        : `${profile.id}@facebook.com`;
+        : `${profile.id}@facebook.com`
 
     // Example: Create/find user in DB
     let user = await UserModel.findOne({ email })

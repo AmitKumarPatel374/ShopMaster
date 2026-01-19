@@ -38,8 +38,9 @@ const userSchema = new mongoose.Schema(
     otp: {
       type: String,
     },
-    otpExpiry: {
-      type: Date,
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
     },
     cart: [
       {
