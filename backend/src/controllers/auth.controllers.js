@@ -167,6 +167,62 @@ const verifyEmailByOTPController = async (req, res) => {
   }
 }
 
+const resendOTPController = async (req, res) => {
+  try {
+    const { contact } = req.body
+
+    if (!contact) {
+      return res.status(400).json({ message: "Email is required" })
+    }
+
+    const tempUser = await TempUserModel.findOne({ email: contact })
+
+    if (!tempUser) {
+      return res.status(404).json({
+        message: "Session expired. Please register again.",
+      })
+    }
+
+    // 🔐 Rate limit (Redis or Cache)
+    const key = `otp-resend:${contact}`
+    const attempts = await cacheInstance.get(key)
+
+    if (attempts && Number(attempts) >= 3) {
+      return res.status(429).json({
+        message: "Too many requests. Try again after 10 minutes.",
+      })
+    }
+
+    // 🔄 Generate new OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString()
+    const otpExpiry = new Date(Date.now() + 5 * 60 * 1000)
+
+    tempUser.otp = otp
+    tempUser.otpExpiry = otpExpiry
+    await tempUser.save()
+
+    // ⏱️ Increase rate limit count
+    await cacheInstance.set(key, (Number(attempts) || 0) + 1, "EX", 600)
+
+    // 📬 Queue email
+    await emailQueue.add("verify-email", {
+      email: tempUser.email,
+      username: tempUser.username,
+      otp,
+      otpExpiry,
+    })
+
+    return res.status(200).json({
+      message: "New OTP sent to your email",
+    })
+  } catch (err) {
+    console.log("Resend OTP error →", err)
+    return res.status(500).json({
+      message: "Internal server error",
+    })
+  }
+}
+
 const logoutController = async (req, res) => {
   try {
     let token = req.cookies.token
@@ -429,4 +485,5 @@ module.exports = {
   facebookController,
   updateUserController,
   verifyEmailByOTPController,
+  resendOTPController,
 }

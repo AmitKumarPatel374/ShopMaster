@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const { registerController, loginController, logoutController, forgotPasswordController, resetPasswordController, updatePasswordController, getProfileController, googleController, updateUserController, verifyEmailByOTPController, facebookController } = require("../controllers/auth.controllers");
+const { registerController, loginController, logoutController, forgotPasswordController, resetPasswordController, updatePasswordController, getProfileController, googleController, updateUserController, verifyEmailByOTPController, facebookController, resendOTPController } = require("../controllers/auth.controllers");
 const authMiddleware = require("../middlewares/auth.middleware");
 const uploads = require("../config/database/multer");
 
@@ -18,6 +18,7 @@ router.post("/update-Password/:id", updatePasswordController);
 router.post("/register", registerController);
 router.post("/login", loginController);
 router.post("/verify-otp", verifyEmailByOTPController);
+router.post("/resend-otp", resendOTPController);
 router.delete("/logout", logoutController);
 
 router.get('/profile',authMiddleware,getProfileController);
