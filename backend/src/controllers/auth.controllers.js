@@ -153,6 +153,12 @@ const verifyEmailByOTPController = async (req, res) => {
 
     await TempUserModel.deleteOne({ email: contact })
 
+     await emailQueue.add("welcome-email", {
+      email: newUser.email,
+      name: newUser.fullname,
+      role:newUser.role
+    })
+
     return res.status(200).json({
       message: "OTP verified successfully",
       token,
