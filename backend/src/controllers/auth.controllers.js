@@ -40,7 +40,7 @@ const registerController = async (req, res) => {
         username,
         email,
         mobile,
-        password:hashedPassword,
+        password: hashedPassword,
         role,
         otp,
         otpExpiry,
@@ -97,6 +97,9 @@ const loginController = async (req, res) => {
         message: "Invalid credentials",
       })
 
+    let token = user.generateToken()
+    console.log("token generated:", token ? "yes" : "no")
+    res.cookie("token", token, getCookieOptions())
 
     return res.status(200).json({
       message: `user logined successfully.`,
@@ -115,18 +118,18 @@ const verifyEmailByOTPController = async (req, res) => {
   try {
     const { contact, otp } = req.body
 
-    console.log(contact,otp);
-    
-    const tempUser = await TempUserModel.findOne({ email:contact })
+    console.log(contact, otp)
 
-    console.log(tempUser);
+    const tempUser = await TempUserModel.findOne({ email: contact })
+
+    console.log(tempUser)
 
     if (!tempUser) {
       return res.status(400).json({ message: "OTP expired" })
     }
 
     if (tempUser.otpExpiry < Date.now()) {
-      await TempUserModel.deleteOne({ email:contact })
+      await TempUserModel.deleteOne({ email: contact })
       return res.status(400).json({ message: "OTP expired" })
     }
 
@@ -135,20 +138,20 @@ const verifyEmailByOTPController = async (req, res) => {
     }
 
     let newUser = await UserModel.create({
-      fullname:tempUser.fullname,
-      username:tempUser.username,
-      email:tempUser.email,
-      mobile:tempUser.mobile,
-      password:tempUser.password,
-      role:tempUser.role,
-      isEmailVerified:true
+      fullname: tempUser.fullname,
+      username: tempUser.username,
+      email: tempUser.email,
+      mobile: tempUser.mobile,
+      password: tempUser.password,
+      role: tempUser.role,
+      isEmailVerified: true,
     })
 
     let token = newUser.generateToken()
     console.log("token generated:", token ? "yes" : "no")
     res.cookie("token", token, getCookieOptions())
 
-    await TempUserModel.deleteOne({email:contact});
+    await TempUserModel.deleteOne({ email: contact })
 
     return res.status(200).json({
       message: "OTP verified successfully",
