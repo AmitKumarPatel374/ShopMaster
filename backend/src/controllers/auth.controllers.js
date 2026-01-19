@@ -97,30 +97,9 @@ const loginController = async (req, res) => {
         message: "Invalid credentials",
       })
 
-    // Generate 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString()
-    const otpExpiry = new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
-
-    user.otp = otp
-    user.otpExpiry = otpExpiry
-    await user.save()
-
-    // let verifyTemp = otpVerifyTemp(user.username, otp)
-    if (isEmail) {
-      const email = contact
-      const username = user.fullname
-      await emailQueue.add("verify-email", {
-        email,
-        username,
-        otp,
-        otpExpiry,
-      })
-    } else {
-      await sendSMS(`+91${contact}`, `Your OTP is ${otp}`)
-    }
 
     return res.status(200).json({
-      message: `OTP sent to your ${isEmail ? "email" : "mobile"} . Please verify.`,
+      message: `user logined successfully.`,
       user: user,
     })
   } catch (error) {
@@ -134,16 +113,20 @@ const loginController = async (req, res) => {
 
 const verifyEmailByOTPController = async (req, res) => {
   try {
-    const { email, otp } = req.body
+    const { contact, otp } = req.body
 
-    const tempUser = await TempUserModel.findOne({ email })
+    console.log(contact,otp);
+    
+    const tempUser = await TempUserModel.findOne({ email:contact })
+
+    console.log(tempUser);
 
     if (!tempUser) {
       return res.status(400).json({ message: "OTP expired" })
     }
 
     if (tempUser.otpExpiry < Date.now()) {
-      await TempUserModel.deleteOne({ email })
+      await TempUserModel.deleteOne({ email:contact })
       return res.status(400).json({ message: "OTP expired" })
     }
 
@@ -165,7 +148,7 @@ const verifyEmailByOTPController = async (req, res) => {
     console.log("token generated:", token ? "yes" : "no")
     res.cookie("token", token, getCookieOptions())
 
-    await TempUserModel.deleteOne({email});
+    await TempUserModel.deleteOne({email:contact});
 
     return res.status(200).json({
       message: "OTP verified successfully",
