@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import apiInstance from "../config/apiInstance"
-import React, {  useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 const GetDeliveryAddress = ({ selectedAddress, setSelectedAddress }) => {
   const [addresses, setAddresses] = useState([])
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const fetchAddress = async () => {
     try {
@@ -59,12 +59,15 @@ const GetDeliveryAddress = ({ selectedAddress, setSelectedAddress }) => {
       {selectedAddress && (
         <div>
           <div className="mt-6 p-4 border rounded-xl bg-green-50 flex justify-between">
-            <div >
+            <div>
               <p className="font-semibold">Selected Address ID:</p>
               <p>{selectedAddress}</p>
             </div>
             <div>
-              <button onClick={()=>navigate("/product/cart/address/payment")} className="bg-green-500 p-2 rounded-xl cursor-pointer hover:bg-green-400">
+              <button
+                onClick={() => navigate("/product/cart/address/payment")}
+                className="bg-green-500 p-2 rounded-xl cursor-pointer hover:bg-green-400"
+              >
                 Continue
               </button>
             </div>
