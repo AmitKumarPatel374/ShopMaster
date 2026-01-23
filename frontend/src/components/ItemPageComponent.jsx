@@ -3,7 +3,7 @@ import React, { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import Slider from "react-slick"
 
-const ItemPageComponent = ({items}) => {
+const ItemPageComponent = ({ items }) => {
   const navigate = useNavigate()
   const { role } = useContext(usercontext)
 
@@ -21,7 +21,6 @@ const ItemPageComponent = ({items}) => {
   return (
     <div>
       <div className="px-4 sm:px-6 lg:px-12 py-8 sm:py-12 bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen">
-    
         {/* Products Grid */}
         {items && items.length > 0 ? (
           <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

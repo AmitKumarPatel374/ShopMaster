@@ -6,11 +6,11 @@ const NavbarFilter = () => {
   const [openIndex, setOpenIndex] = useState(null)
   const [mobileMenu, setMobileMenu] = useState(null)
   const dropdownRef = useRef(null)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const isMobile = window.innerWidth < 1024
 
-  const {categories}=useContext(usercontext);
+  const { categories } = useContext(usercontext)
 
   useEffect(() => {
     if (isMobile) return
@@ -34,48 +34,49 @@ const NavbarFilter = () => {
     <div className="w-full bg-white shadow relative">
       {/* TOP NAV */}
       <ul className="flex justify-around px-2 md:px-8 py-4 flex-wrap gap-5 bg-gray-100  text-sm md:text-base">
-        {categories && categories.map((cat, index) => (
-          <li
-            key={index}
-            className="relative cursor-pointer "
-            onMouseEnter={() => !isMobile && setOpenIndex(index)}
-            onMouseLeave={() => !isMobile && setOpenIndex(null)}
-            onClick={() => isMobile && setMobileMenu(index)}
-          >
-            <span className="hover:text-blue-600">{cat.name}</span>
+        {categories &&
+          categories.map((cat, index) => (
+            <li
+              key={index}
+              className="relative cursor-pointer "
+              onMouseEnter={() => !isMobile && setOpenIndex(index)}
+              onMouseLeave={() => !isMobile && setOpenIndex(null)}
+              onClick={() => isMobile && setMobileMenu(index)}
+            >
+              <span className="hover:text-blue-600">{cat.name}</span>
 
-            {/* DESKTOP MEGA MENU */}
-            {!isMobile && openIndex === index && (
-              <div
-                ref={dropdownRef}
-                className="absolute top-full bg-white shadow-xl border rounded-md p-5 z-50 min-w-[700px] bg-gradient-to-br from-gray-100 via-white to-blue-100"
-              >
-                <div className="flex flex-wrap gap-10 max-w-[90vw]">
-                  {cat.sub.map((sub, i) => (
-                    <div
-                      key={i}
-                      className="w-[180px]"
-                    >
-                      <h4 className="font-semibold text-gray-800 mb-2">{sub.title}</h4>
-                      <ul className="space-y-1">
-                        {sub.items.map((item, j) => (
-                          <li
-                            // onClick={()=>console.log(cat.name,sub.title,item)}
-                            onClick={()=>navigate(`/filter/${cat.name}/${sub.title}/${item}`)}
-                            key={j}
-                            className="text-gray-600 text-sm hover:text-blue-500"
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+              {/* DESKTOP MEGA MENU */}
+              {!isMobile && openIndex === index && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute top-full bg-white shadow-xl border rounded-md p-5 z-50 min-w-[700px] bg-gradient-to-br from-gray-100 via-white to-blue-100"
+                >
+                  <div className="flex flex-wrap gap-10 max-w-[90vw]">
+                    {cat.sub.map((sub, i) => (
+                      <div
+                        key={i}
+                        className="w-[180px]"
+                      >
+                        <h4 className="font-semibold text-gray-800 mb-2">{sub.title}</h4>
+                        <ul className="space-y-1">
+                          {sub.items.map((item, j) => (
+                            <li
+                              // onClick={()=>console.log(cat.name,sub.title,item)}
+                              onClick={() => navigate(`/filter/${cat.name}/${sub.title}/${item}`)}
+                              key={j}
+                              className="text-gray-600 text-sm hover:text-blue-500"
+                            >
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-          </li>
-        ))}
+              )}
+            </li>
+          ))}
       </ul>
 
       {/* MOBILE FULL SCREEN MENU */}
@@ -99,7 +100,12 @@ const NavbarFilter = () => {
                 <h3 className="font-semibold mb-2">{sub.title}</h3>
                 <ul className="text-sm space-y-1">
                   {sub.items.map((item, j) => (
-                    <li className="hover:text-blue-500" key={j}>{item}</li>
+                    <li
+                      className="hover:text-blue-500"
+                      key={j}
+                    >
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -112,6 +118,3 @@ const NavbarFilter = () => {
 }
 
 export default NavbarFilter
-
-
-

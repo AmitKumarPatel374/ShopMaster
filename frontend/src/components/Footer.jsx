@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaGithub } from "react-icons/fa";
-import { usercontext } from "../context/DataContext";
+import React, { useContext } from "react"
+import { Link } from "react-router-dom"
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaGithub } from "react-icons/fa"
+import { usercontext } from "../context/DataContext"
 
 const Footer = () => {
-  const { role, user_id } = useContext(usercontext);
-  const isUser = role === "user";
+  const { role, user_id } = useContext(usercontext)
+  const isUser = role === "user"
 
-  const animatedLink = "relative inline-block after:block after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all after:duration-300 after:mt-1 hover:after:w-full";
+  const animatedLink =
+    "relative inline-block after:block after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all after:duration-300 after:mt-1 hover:after:w-full"
 
   return (
     <footer className="bg-gray-200 text-gray-800 pt-12 pb-6 border-t border-gray-300">
@@ -19,8 +20,8 @@ const Footer = () => {
             className="h-15 w-auto object-contain"
           />
           <p className="text-sm leading-6 text-gray-600">
-            Your trusted place to shop for quality products at the best prices.
-            Enjoy fast delivery, amazing deals, and reliable support — all in one place.
+            Your trusted place to shop for quality products at the best prices. Enjoy fast delivery,
+            amazing deals, and reliable support — all in one place.
           </p>
         </div>
 
@@ -31,22 +32,34 @@ const Footer = () => {
             {isUser ? (
               <>
                 <li>
-                  <Link to="/" className={animatedLink}>
+                  <Link
+                    to="/"
+                    className={animatedLink}
+                  >
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link to="/view-all-product" className={animatedLink}>
+                  <Link
+                    to="/view-all-product"
+                    className={animatedLink}
+                  >
                     Products
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className={animatedLink}>
+                  <Link
+                    to="/about"
+                    className={animatedLink}
+                  >
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link to="/user-profile" className={animatedLink}>
+                  <Link
+                    to="/user-profile"
+                    className={animatedLink}
+                  >
                     Profile
                   </Link>
                 </li>
@@ -54,7 +67,10 @@ const Footer = () => {
             ) : (
               <>
                 <li>
-                  <Link to="/" className={animatedLink}>
+                  <Link
+                    to="/"
+                    className={animatedLink}
+                  >
                     Home
                   </Link>
                 </li>
@@ -67,22 +83,34 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/create-product" className={animatedLink}>
+                  <Link
+                    to="/create-product"
+                    className={animatedLink}
+                  >
                     Create Product
                   </Link>
                 </li>
                 <li>
-                  <Link to="/view-users" className={animatedLink}>
+                  <Link
+                    to="/view-users"
+                    className={animatedLink}
+                  >
                     View Users
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className={animatedLink}>
+                  <Link
+                    to="/about"
+                    className={animatedLink}
+                  >
                     about
                   </Link>
                 </li>
                 <li>
-                  <Link to="/user-profile" className={animatedLink}>
+                  <Link
+                    to="/user-profile"
+                    className={animatedLink}
+                  >
                     Profile
                   </Link>
                 </li>
@@ -91,7 +119,7 @@ const Footer = () => {
           </ul>
         </div>
 
-       {/* contact section */}
+        {/* contact section */}
         <div>
           <h3 className="text-lg font-semibold text-blue-600 mb-3">Contact</h3>
           <p className="text-sm mb-2 text-gray-700">📞 +91 9753005051</p>
@@ -145,7 +173,7 @@ const Footer = () => {
         </p>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
