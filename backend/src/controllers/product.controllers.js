@@ -4,6 +4,7 @@ const ProductModel = require("../model/product.model")
 const UserModel = require("../model/user.model")
 const groq = require("../services/groqAI.service")
 const sendFilesToStorage = require("../services/storage.service")
+const { emailQueue } = require("../queues/emailQueue")
 
 const getAllProductController = async (req, res) => {
   try {
@@ -163,6 +164,8 @@ const createProductController = async (req, res) => {
       specifications,
     } = req.body
 
+    const user = req.user;
+
     if (price) {
       try {
         price = JSON.parse(price)
@@ -220,6 +223,20 @@ const createProductController = async (req, res) => {
       createdBy: req.user._id,
     })
 
+   // 🔥 PUSH EMAIL JOB TO QUEUE
+    await emailQueue.add("PRODUCT_CREATED", {
+      email: user.email,
+      name: user.name || "Seller",
+      product: {
+        title: newProduct.title,
+        brand: newProduct.brand,
+        category: newProduct.category,
+        price: newProduct.price.amount,
+        currency: newProduct.price.currency,
+        image: newProduct.images[0],
+        productId: newProduct._id,
+      },
+    })
     console.log(newProduct)
     return res.status(200).json({
       message: "product created",

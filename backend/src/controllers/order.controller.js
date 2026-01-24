@@ -18,11 +18,6 @@ const createOrder = async (req, res) => {
       quantity: item.quantity,
     }))
 
-    // console.log(items);
-    // const totalAmount = items.reduce(
-    //   (sum, i) => sum + i.productId.price.amount * i.quantity,
-    //   0
-    // );
 
     // Create new order
     const order = await orderModel.create({
@@ -45,6 +40,8 @@ const createOrder = async (req, res) => {
     // Clear cart after placing order
     user.cart = []
     await user.save()
+
+
 
     return res.status(201).json({
       message: "order created successfully!",
