@@ -1,4 +1,4 @@
-const {mongoose } = require("mongoose")
+const { mongoose } = require("mongoose")
 const productModel = require("../model/product.model")
 const ProductModel = require("../model/product.model")
 const UserModel = require("../model/user.model")
@@ -164,7 +164,7 @@ const createProductController = async (req, res) => {
       specifications,
     } = req.body
 
-    const user = req.user;
+    const user = req.user
 
     if (price) {
       try {
@@ -223,7 +223,7 @@ const createProductController = async (req, res) => {
       createdBy: req.user._id,
     })
 
-   // 🔥 PUSH EMAIL JOB TO QUEUE
+    // 🔥 PUSH EMAIL JOB TO QUEUE
     await emailQueue.add("PRODUCT_CREATED", {
       email: user.email,
       name: user.name || "Seller",
@@ -487,7 +487,6 @@ const updateCartQuantity = async (req, res) => {
   try {
     const { productId, change } = req.body
     const userId = req.user._id
-    
 
     const user = await UserModel.findById(userId)
     // console.log(user)
@@ -514,8 +513,8 @@ const updateCartQuantity = async (req, res) => {
 const deleteCartItem = async (req, res) => {
   try {
     const userId = req.user._id
-    console.log(req.user);
-    
+    console.log(req.user)
+
     const productId = req.params.id
 
     await UserModel.findByIdAndUpdate(
@@ -530,7 +529,7 @@ const deleteCartItem = async (req, res) => {
 
     res.json({ message: "Item removed from cart" })
   } catch (err) {
-    console.log(err);
+    console.log(err)
     res.status(500).json({ message: "Server Error", err })
   }
 }
