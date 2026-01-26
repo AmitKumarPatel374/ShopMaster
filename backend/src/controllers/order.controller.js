@@ -18,7 +18,6 @@ const createOrder = async (req, res) => {
       quantity: item.quantity,
     }))
 
-
     // Create new order
     const order = await orderModel.create({
       userId,
@@ -40,8 +39,6 @@ const createOrder = async (req, res) => {
     // Clear cart after placing order
     user.cart = []
     await user.save()
-
-
 
     return res.status(201).json({
       message: "order created successfully!",
@@ -100,7 +97,7 @@ const updateOrderController = async (req, res) => {
     }
 
     const order = await orderModel.findByIdAndUpdate(
-      { _id:order_id },
+      { _id: order_id },
       {
         paymentStatus: paymentStatus,
         orderStatus: orderStatus,

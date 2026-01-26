@@ -153,10 +153,10 @@ const verifyEmailByOTPController = async (req, res) => {
 
     await TempUserModel.deleteOne({ email: contact })
 
-     await emailQueue.add("welcome-email", {
+    await emailQueue.add("welcome-email", {
       email: newUser.email,
       name: newUser.fullname,
-      role:newUser.role
+      role: newUser.role,
     })
 
     return res.status(200).json({
@@ -393,12 +393,11 @@ const updatePasswordController = async (req, res) => {
     const email = updatedPassUser.email
     const name = updatedPassUser.fullname
 
-    console.log(email,name);
-    
+    console.log(email, name)
 
-    await emailQueue.add("password-updated",{
+    await emailQueue.add("password-updated", {
       email,
-      name
+      name,
     })
 
     return res.status(200).json({
