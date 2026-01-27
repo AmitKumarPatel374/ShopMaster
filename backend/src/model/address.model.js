@@ -9,7 +9,7 @@ const addressSchema = new mongoose.Schema({
     type: String,
     minlength: 10,
     maxlength: 10,
-    unique:false
+    unique: false,
   },
   pincode: {
     type: String,
@@ -36,8 +36,6 @@ const addressSchema = new mongoose.Schema({
   },
 })
 
+const addressModel = mongoose.model("address", addressSchema)
 
-
-const addressModel = mongoose.model("address",addressSchema);
-
-module.exports=addressModel;
+module.exports = addressModel

@@ -14,15 +14,15 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category:{
+    category: {
       type: String,
       required: true,
     },
-    subCategory:{
+    subCategory: {
       type: String,
       required: true,
     },
-    item:{
+    item: {
       type: String,
       required: true,
     },
@@ -74,7 +74,7 @@ const productSchema = new mongoose.Schema(
     payment_status: {
       type: String,
       enum: ["pending", "failed", "success"],
-      default:"pending"
+      default: "pending",
     },
   },
   { timestamps: true }
