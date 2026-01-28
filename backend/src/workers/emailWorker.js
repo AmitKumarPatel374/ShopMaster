@@ -19,6 +19,7 @@ new Worker(
     }else if(job.name=="password-updated"){
       await sendPasswordUpdatedEmail(job.data);
     }else if(job.name == "PRODUCT_CREATED"){
+       console.log("📦 PRODUCT JOB DATA:", job.data)
       await sendProductCreatedEmail(job.data);
     } else {
       console.warn("⚠️ Unknown job type:", job.name)

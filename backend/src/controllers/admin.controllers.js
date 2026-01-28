@@ -35,11 +35,9 @@ const getAllYourProductsController = async (req, res) => {
     try {
 
         const user_id = req.params.user_id;
-        console.log(user_id);
         
 
         let allProducts = await productModel.find({createdBy:user_id});
-        console.log(allProducts);
         
 
         if (allProducts.length == 0 || allProducts == null) {

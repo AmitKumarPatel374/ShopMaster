@@ -226,7 +226,7 @@ const createProductController = async (req, res) => {
     // 🔥 PUSH EMAIL JOB TO QUEUE
     await emailQueue.add("PRODUCT_CREATED", {
       email: user.email,
-      name: user.name || "Seller",
+      name: user.fullname || "Seller",
       product: {
         title: newProduct.title,
         brand: newProduct.brand,
