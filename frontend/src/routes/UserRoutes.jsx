@@ -88,7 +88,7 @@ const UserRutes = () => {
         element={<ViewProductDeatail />}
       />
       <Route
-        path="/view-seller-products/:user_id"
+        path="/view-seller-products"
         element={<ViewAdminProducts />}
       />
       <Route

@@ -90,7 +90,7 @@ const UpdateProfile = () => {
 
       return () => ctx.revert();
     }
-  }, [user]);
+  }, []);
 
   // Handle input changes
   const handleChange = (e) => {

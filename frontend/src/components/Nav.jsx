@@ -128,7 +128,7 @@ const Nav = () => {
                 Home
               </NavLink>
               <NavLink
-                to={`/view-seller-products/${user_id}`}
+                to={`/view-seller-products`}
                 className={linkClass}
               >
                 Products
@@ -282,7 +282,7 @@ const Nav = () => {
                   Home
                 </NavLink>
                 <NavLink
-                  to={`/view-seller-products/${user_id}`}
+                  to={`/view-seller-products`}
                   onClick={toggleMenu}
                   className={linkClass}
                 >

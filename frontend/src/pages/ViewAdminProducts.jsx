@@ -12,22 +12,33 @@ const ViewAdminProducts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { role } = useContext(usercontext);
-  const { user_id } = useParams();
+  // const { role } = useContext(usercontext);
+  // const { user_id } = useParams();
+  const { user_id } = useContext(usercontext)
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await apiInstance.get(`/admin/get-Your-products/${user_id}`);
-        setProducts(response.data.products);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
+ useEffect(() => {
+  if (!user_id) return // wait until auth loads
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true)
+      const response = await apiInstance.get(
+        `/admin/get-Your-products/${user_id}`
+      )
+      setProducts(response.data.products || [])
+      setError(null)
+    } catch (err) {
+      setError(err.message)
+      setProducts([])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  fetchProducts()
+}, [user_id])
+
+
 
   const deleteHandler = async (id) => {
     try {
