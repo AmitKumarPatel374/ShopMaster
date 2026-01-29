@@ -2,17 +2,21 @@ import React, { useContext, useState } from "react"
 import apiInstance from "../config/apiInstance"
 import { toast } from "react-toastify"
 import { usercontext } from "../context/DataContext"
+import { useNavigate } from "react-router-dom"
 
 const PaymentPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("")
   const { totalAmount, currency } = useContext(usercontext)
 
     const {addressId, setAddressId} = useContext(usercontext);
+    const navigate = useNavigate();
     
   console.log(selectedMethod)
 
   const handleCOD = () => {
     toast.success("order placed successfully!")
+    navigate("/product/orders")
+    
   }
 
   const amountToPay = localStorage.getItem("amountToPay")
@@ -41,7 +45,7 @@ const PaymentPage = () => {
           })
           if (verifyRes.data.payment?.status === "paid") {
             toast.success("Payment Success!")
-
+            navigate("/product/orders")
             // ---- IMPORTANT ----
             // Now create order here
             await orderHandler()
