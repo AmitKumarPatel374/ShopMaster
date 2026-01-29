@@ -111,7 +111,7 @@ const getOrderByIdController = async (req, res) => {
 const updateOrderController = async (req, res) => {
   try {
     const order_id = req.params.order_id
-
+    const user = req.user;
     const { orderStatus, currentLocation, paymentStatus } = req.body
 
     if (!order_id) {
@@ -119,6 +119,9 @@ const updateOrderController = async (req, res) => {
         message: "order_id not found",
       })
     }
+
+    const findOrder = await orderModel.findById({_id:order_id})
+    const customer = await UserModel.findById({_id:findOrder.userId});
 
     const order = await orderModel.findByIdAndUpdate(
       { _id: order_id },
@@ -137,6 +140,26 @@ const updateOrderController = async (req, res) => {
         message: "something went wrong",
       })
     }
+
+    await emailQueue.add("update_order", {
+      email: customer.email,
+      name: customer.fullname || "customer",
+      orderStatus,
+      currentLocation,
+      paymentStatus,
+      order_id
+    })
+
+    await emailQueue.add("update_order_seller", {
+      email: user.email,
+      name: user.fullname || "customer",
+      orderStatus,
+      currentLocation,
+      paymentStatus,
+      order_id
+    })
+
+    
 
     return res.status(200).json({
       message: "order updated successfully!",

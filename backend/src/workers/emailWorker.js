@@ -8,6 +8,8 @@ import { sendPasswordUpdatedEmail } from "../services/sendMail/sendPasswordUpdat
 import { sendProductCreatedEmail } from "../services/sendMail/sendProductCreatedEmail.js"
 import { sendOrderPlacedMail } from "../services/sendMail/sendOrderPlacedMail.js"
 import { sendOrderPlacedSellerMail } from "../services/sendMail/sendOrderPlacedSellerMail.js"
+import { sendOrderUpdateCustomerMail } from "../services/sendMail/sendOrderUpdateCustomerMail.js"
+import { sendOrderUpdateSellerMail } from "../services/sendMail/sendOrderUpdateSellerMail.js"
 
 new Worker(
   "email-queue",
@@ -25,8 +27,12 @@ new Worker(
     }else if(job.name === "order_place"){
       await sendOrderPlacedMail(job.data)
     }else if(job.name === "order_place_seller"){
-      // console.log("📦 ORDER JOB DATA:", job.data)
       await sendOrderPlacedSellerMail(job.data);
+    }else if(job.name === "update_order"){
+      await sendOrderUpdateCustomerMail(job.data);
+    }else if(job.name === "update_order_seller"){
+      // console.log("📦 ORDER JOB DATA seller:", job.data)
+      await sendOrderUpdateSellerMail(job.data);
     } else {
       console.warn("⚠️ Unknown job type:", job.name)
     }
