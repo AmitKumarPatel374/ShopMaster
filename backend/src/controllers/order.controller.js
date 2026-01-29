@@ -1,5 +1,6 @@
 const orderModel = require("../model/order.model")
 const UserModel = require("../model/user.model")
+const { emailQueue } = require("../queues/emailQueue")
 
 const createOrder = async (req, res) => {
   try {
@@ -36,9 +37,19 @@ const createOrder = async (req, res) => {
       },
     })
 
+    const orderId= order._id;
+
+
     // Clear cart after placing order
     user.cart = []
     await user.save()
+
+     await emailQueue.add("order_place", {
+      email: user.email,
+      name: user.fullname || "customer",
+      amountToPay,
+      orderId
+    })
 
     return res.status(201).json({
       message: "order created successfully!",
