@@ -14,6 +14,9 @@ const createOrder = async (req, res) => {
       return res.status(400).json({ message: "Cart is empty" })
     }
     const seller_id = user.cart[0].productId.createdBy
+
+    const seller = await UserModel.findById({_id:seller_id})
+
     const items = user.cart.map((item) => ({
       productId: item.productId._id,
       quantity: item.quantity,
@@ -50,6 +53,16 @@ const createOrder = async (req, res) => {
       amountToPay,
       orderId
     })
+
+     await emailQueue.add("order_place_seller", {
+      email: seller.email,
+      name: seller.fullname || "seller",
+      userId,
+      amountToPay,
+      orderId
+    })
+
+    
 
     return res.status(201).json({
       message: "order created successfully!",
