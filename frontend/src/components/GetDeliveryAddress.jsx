@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import apiInstance from "../config/apiInstance"
 import React, { useEffect, useState } from "react"
 
-const GetDeliveryAddress = ({ selectedAddress, setSelectedAddress }) => {
+const GetDeliveryAddress = ({ selectedAddress, setSelectedAddress,refresh  }) => {
   const [addresses, setAddresses] = useState([])
   const navigate = useNavigate()
 
@@ -17,7 +17,7 @@ const GetDeliveryAddress = ({ selectedAddress, setSelectedAddress }) => {
 
   useEffect(() => {
     fetchAddress()
-  }, [])
+  }, [refresh])
 
   return (
     <div className="p-4">

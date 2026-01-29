@@ -1,15 +1,24 @@
 import { usercontext } from "../context/DataContext"
 import GetDeliveryAddress from "../components/GetDeliveryAddress"
 import AddressFormLayout from "../layouts/AddressFormLayout"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 const AddressForm = () => {
   const [isAdd, setIsAdd] = useState(false)
   const [selectedAddress, setSelectedAddress] = useState(null)
+  const [refresh, setRefresh] = useState(false)
 
-    const {addressId, setAddressId} = useContext(usercontext);
-    setAddressId(selectedAddress)
-    localStorage.setItem("addressId",selectedAddress)
+  const { addressId, setAddressId } = useContext(usercontext)
+  useEffect(() => {
+    if (selectedAddress) {
+      setAddressId(selectedAddress)
+      localStorage.setItem("addressId", selectedAddress)
+    }
+  }, [selectedAddress])
+
+  const handleRefresh = () => {
+    setRefresh((prev) => !prev)
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 md:p-8">
@@ -19,6 +28,7 @@ const AddressForm = () => {
         <GetDeliveryAddress
           selectedAddress={selectedAddress}
           setSelectedAddress={setSelectedAddress}
+          refresh={refresh}
         />
       </div>
 
@@ -44,7 +54,7 @@ const AddressForm = () => {
               X
             </button>
           </div>
-          <AddressFormLayout setIsAdd={setIsAdd} />
+          <AddressFormLayout setIsAdd={setIsAdd} onSuccess={handleRefresh} />
         </div>
       )}
     </div>
