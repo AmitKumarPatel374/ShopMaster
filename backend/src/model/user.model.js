@@ -19,8 +19,8 @@ const userSchema = new mongoose.Schema(
     },
     mobile: {
       type: String,
-      // unique: true,
-      // sparse: true,   // 🔥 THIS IS THE FIX
+      unique: true,
+      sparse: true,   // 🔥 THIS IS THE FIX
       minlength: 10,
       maxlength: 10,
     },
