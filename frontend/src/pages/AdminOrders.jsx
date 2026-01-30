@@ -95,7 +95,7 @@ const AdminOrders = () => {
                   className="flex gap-4 p-4 bg-gray-50 rounded-lg border"
                 >
                   <img
-                    src={item.productId?.image || "/placeholder.jpg"}
+                    src={item.productId?.images[0] || "/placeholder.jpg"}
                     alt={item.productId?.title}
                     className="w-20 h-20 object-cover rounded-lg border"
                   />
