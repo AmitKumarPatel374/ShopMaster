@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Routes, Route, useLocation } from "react-router-dom"
 import { AnimatePresence } from "framer-motion"
 import Nav from "./components/Nav"
@@ -13,6 +13,16 @@ import HomeProductSquareCard from "./layouts/HomeProductSquareCard"
 const App = () => {
   const [toggle, setToggle] = useState(true)
   const location = useLocation()
+
+  useEffect(() => {
+    if (window.location.hash === "#_=_") {
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search
+      )
+    }
+  }, [])
 
   return (
     <div>
