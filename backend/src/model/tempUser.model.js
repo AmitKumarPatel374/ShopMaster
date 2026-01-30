@@ -7,10 +7,16 @@ const tempUserSchema = new mongoose.Schema({
   mobile: Number,
   password: String,
   role: String,
+  facebookId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
+
   otp: String,
   otpExpiry: Date,
 })
 
-const TempUserModel = mongoose.model("TempUser",tempUserSchema)
+const TempUserModel = mongoose.model("TempUser", tempUserSchema)
 
-module.exports = TempUserModel;
+module.exports = TempUserModel

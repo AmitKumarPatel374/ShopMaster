@@ -11,6 +11,7 @@ import { sendOrderPlacedSellerMail } from "../services/sendMail/sendOrderPlacedS
 import { sendOrderUpdateCustomerMail } from "../services/sendMail/sendOrderUpdateCustomerMail.js"
 import { sendOrderUpdateSellerMail } from "../services/sendMail/sendOrderUpdateSellerMail.js"
 import { sendGoogleLoginAlertMail } from "../services/sendMail/sendGoogleLoginAlertMail.js"
+import { sendOtpEmailFacebook } from "../services/sendMail/sendOtpEmailFacebook.js"
 
 new Worker(
   "email-queue",
@@ -36,6 +37,8 @@ new Worker(
     }else if(job.name === "google_alert"){
       // console.log(" JOB DATA :", job.data)
       await sendGoogleLoginAlertMail(job.data);
+    }else if(job.name === "verify_email_facebook"){
+      await sendOtpEmailFacebook(job.data);
     } else {
       console.warn("⚠️ Unknown job type:", job.name)
     }

@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const { registerController, loginController, logoutController, forgotPasswordController, resetPasswordController, updatePasswordController, getProfileController, googleController, updateUserController, verifyEmailByOTPController, facebookController, resendOTPController } = require("../controllers/auth.controllers");
+const { registerController, loginController, logoutController, forgotPasswordController, resetPasswordController, updatePasswordController, getProfileController, googleController, updateUserController, verifyEmailByOTPController, facebookController, resendOTPController, addEmailController, verifyEmailFaceController } = require("../controllers/auth.controllers");
 const authMiddleware = require("../middlewares/auth.middleware");
 const uploads = require("../config/database/multer");
 
@@ -31,6 +31,10 @@ router.get("/facebook/callback",passport.authenticate("facebook",{failureRedirec
 router.get("/google",passport.authenticate("google",{scope:["profile","email"]}));
 
 router.get("/google/callback",passport.authenticate("google",{failureRedirect:"/api/auth/google/failed"}),googleController);
+
+router.post("/add-email",addEmailController)
+
+router.post("/verify-email",verifyEmailFaceController);
 
 //failed api
 router.get("/google/failed",(req,res)=>{

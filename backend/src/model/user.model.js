@@ -43,6 +43,11 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    facebookId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
     cart: [
       {
         productId: {

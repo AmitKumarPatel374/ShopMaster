@@ -466,38 +466,138 @@ const googleController = async (req, res) => {
 
 const facebookController = async (req, res) => {
   try {
-    // console.log("user->",req.user);
     const profile = req.user
 
     const email =
-  profile.emails && profile.emails.length > 0
-    ? profile.emails[0].value
-    : `${profile.id}@facebook.com`
+      profile.emails && profile.emails.length
+        ? profile.emails[0].value
+        : null
 
-let user = await UserModel.findOne({ email })
+    // 🔍 STEP 1: Find by Facebook ID (MOST IMPORTANT)
+    let user = await UserModel.findOne({ facebookId: profile.id })
 
-if (!user) {
-  user = await UserModel.create({
-    fullname: profile.displayName,
-    email: email,
-    username: profile.displayName.split(" ")[0],
-    password: "facebook_auth",
-    profileLogo: profile.photos?.[0]?.value || "",
-  })
-}
+    // 🔗 STEP 2: If not found, try linking by email
+    if (!user && email) {
+      user = await UserModel.findOne({ email })
 
+      if (user && !user.facebookId) {
+        user.facebookId = profile.id
+        await user.save()
+      }
+    }
 
+    // 🆕 STEP 3: If still not found, create new user
+    if (!user) {
+      // If email missing → redirect to add-email
+      if (!email) {
+        return res.redirect(
+          `${process.env.CLIENT_ORIGIN}/add-email?fid=${profile.id}`
+        )
+      }
+
+      user = await UserModel.create({
+        fullname: profile.displayName,
+        email,
+        facebookId: profile.id,
+        username: profile.displayName.split(" ")[0] + profile.id.slice(-4),
+        password: "facebook_auth",
+        profileLogo: profile.photos?.[0]?.value || "",
+        isEmailVerified: true
+      })
+    }
+
+    // ✅ STEP 4: Login
     const token = user.generateToken()
-    console.log("facebook OAuth token generated:", token ? "✓" : "✗")
-
     res.cookie("token", token, getCookieOptions())
 
-    const redirectUrl = process.env.CLIENT_ORIGIN
-    res.redirect(redirectUrl)
-  } catch (error) {
-    console.log("error in callback url->", error)
-    const redirectUrl = process.env.CLIENT_ORIGIN
-    res.redirect(redirectUrl)
+    return res.redirect(process.env.CLIENT_ORIGIN)
+  } catch (err) {
+    console.log("facebook callback error:", err)
+    return res.redirect(process.env.CLIENT_ORIGIN)
+  }
+}
+
+const addEmailController =  async (req, res) => {
+  try {
+    const { email, facebookId } = req.body
+
+    if (!email || !facebookId) {
+      return res.status(400).json({ message: "Missing fields" })
+    }
+
+    // Block duplicate email
+    const exists = await UserModel.findOne({ email })
+    if (exists) {
+      return res.status(400).json({ message: "Email already in use" })
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString()
+
+    let tempUser = await TempUserModel.findOne({ facebookId })
+
+    if (!tempUser) {
+      tempUser = await TempUserModel.create({
+        facebookId,
+        email,
+        otp,
+        otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
+        role: "user"
+      })
+    } else {
+      tempUser.email = email
+      tempUser.otp = otp
+      tempUser.otpExpiry = new Date(Date.now() + 10 * 60 * 1000)
+      await tempUser.save()
+    }
+
+    await emailQueue.add("verify_email_facebook", {
+      email,
+      name: "Customer",
+      otp
+    })
+
+    res.json({ message: "OTP sent to email" })
+  } catch (err) {
+    console.log("add-email error:", err)
+    res.status(500).json({ message: "Internal error" })
+  }
+}
+
+const verifyEmailFaceController = async (req, res) => {
+  try {
+    const { facebookId, otp } = req.body
+
+    const tempUser = await TempUserModel.findOne({ facebookId })
+    if (!tempUser) {
+      return res.status(400).json({ message: "Session expired" })
+    }
+
+    if (tempUser.otp !== otp) {
+      return res.status(400).json({ message: "Invalid OTP" })
+    }
+
+    if (tempUser.otpExpiry < Date.now()) {
+      return res.status(400).json({ message: "OTP expired" })
+    }
+
+    const user = await UserModel.create({
+      fullname: tempUser.fullname || "Facebook User",
+      email: tempUser.email,
+      role: tempUser.role,
+      facebookId: tempUser.facebookId,
+      password: "facebook_auth",
+      isEmailVerified: true
+    })
+
+    await TempUserModel.deleteOne({ _id: tempUser._id })
+
+    const token = user.generateToken()
+    res.cookie("token", token, getCookieOptions())
+
+    res.json({ message: "Account verified & logged in" })
+  } catch (err) {
+    console.log("verify-email error:", err)
+    res.status(500).json({ message: "Internal error" })
   }
 }
 
@@ -514,4 +614,6 @@ module.exports = {
   updateUserController,
   verifyEmailByOTPController,
   resendOTPController,
+  addEmailController,
+  verifyEmailFaceController
 }
