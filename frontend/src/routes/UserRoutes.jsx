@@ -26,6 +26,8 @@ import OrderPage from "../pages/OrderPage"
 import TrackOrder from "../pages/TrackOrder"
 import AdminOrders from "../pages/AdminOrders"
 import OrderUpdateForm from "../pages/OrderUpdateForm"
+import AddEmail from "../pages/AddEmail"
+import VerifyFacebookEmail from "../pages/VerifyFacebookEmail"
 
 const UserRutes = () => {
   return (
@@ -69,6 +71,15 @@ const UserRutes = () => {
       <Route
         path="/verify-otp"
         element={<VerifyContact />}
+      />
+      <Route
+        path="/add-email"
+        element={<AddEmail />}
+      />
+
+      <Route
+        path="/verify-email"
+        element={<VerifyFacebookEmail />}
       />
 
       <Route
