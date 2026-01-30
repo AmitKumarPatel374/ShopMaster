@@ -15,6 +15,7 @@ const connectDB = require("./src/config/database/db");
 const cacheInstance = require("./src/services/cache.service");
 
 require("./src/services/googleOauth.service");
+require("./src/services/facebookOauth.service");
 const session = require("express-session");
 const passport = require("passport");
 
@@ -78,6 +79,7 @@ app.use(
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
+console.log("Strategies loaded:", Object.keys(passport._strategies))
 
 cacheInstance.on("connect", () => {
   console.log("Redis connected successfully");

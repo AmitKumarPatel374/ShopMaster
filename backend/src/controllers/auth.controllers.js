@@ -469,22 +469,23 @@ const facebookController = async (req, res) => {
     // console.log("user->",req.user);
     const profile = req.user
 
-    let email =
-      profile.emails && profile.emails[0]?.value
-        ? profile.emails[0].value
-        : `${profile.id}@facebook.com`
+    const email =
+  profile.emails && profile.emails.length > 0
+    ? profile.emails[0].value
+    : `${profile.id}@facebook.com`
 
-    // Example: Create/find user in DB
-    let user = await UserModel.findOne({ email })
-    if (!user) {
-      user = await UserModel.create({
-        fullname: profile.displayName,
-        email: profile.emails[0].value,
-        username: profile.displayName.split(" ")[0],
-        password: "facebook_auth", // placeholder, not used
-        profileLogo: profile.photos[0].value,
-      })
-    }
+let user = await UserModel.findOne({ email })
+
+if (!user) {
+  user = await UserModel.create({
+    fullname: profile.displayName,
+    email: email,
+    username: profile.displayName.split(" ")[0],
+    password: "facebook_auth",
+    profileLogo: profile.photos?.[0]?.value || "",
+  })
+}
+
 
     const token = user.generateToken()
     console.log("facebook OAuth token generated:", token ? "✓" : "✗")
