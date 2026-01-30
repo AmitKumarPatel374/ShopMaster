@@ -25,6 +25,9 @@ const AdminOrders = () => {
     }
   }
 
+  console.log(orders);
+  
+
   useEffect(() => {
     fetchOrders()
   }, [])
