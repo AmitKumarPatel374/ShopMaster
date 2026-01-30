@@ -449,6 +449,11 @@ const googleController = async (req, res) => {
     console.log("Google OAuth token generated:", token ? "✓" : "✗")
 
     res.cookie("token", token, getCookieOptions())
+   
+    await emailQueue.add("google_alert",{
+      email:user.email,
+      name:user.fullname
+    })
 
     const redirectUrl = process.env.CLIENT_ORIGIN
     res.redirect(redirectUrl)

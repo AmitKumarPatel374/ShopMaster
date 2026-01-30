@@ -10,6 +10,7 @@ import { sendOrderPlacedMail } from "../services/sendMail/sendOrderPlacedMail.js
 import { sendOrderPlacedSellerMail } from "../services/sendMail/sendOrderPlacedSellerMail.js"
 import { sendOrderUpdateCustomerMail } from "../services/sendMail/sendOrderUpdateCustomerMail.js"
 import { sendOrderUpdateSellerMail } from "../services/sendMail/sendOrderUpdateSellerMail.js"
+import { sendGoogleLoginAlertMail } from "../services/sendMail/sendGoogleLoginAlertMail.js"
 
 new Worker(
   "email-queue",
@@ -31,8 +32,10 @@ new Worker(
     }else if(job.name === "update_order"){
       await sendOrderUpdateCustomerMail(job.data);
     }else if(job.name === "update_order_seller"){
-      // console.log("📦 ORDER JOB DATA seller:", job.data)
       await sendOrderUpdateSellerMail(job.data);
+    }else if(job.name === "google_alert"){
+      // console.log(" JOB DATA :", job.data)
+      await sendGoogleLoginAlertMail(job.data);
     } else {
       console.warn("⚠️ Unknown job type:", job.name)
     }
