@@ -23,7 +23,7 @@ const RegistrationForm = () => {
       if (response) toast.success(response?.data?.message);
       console.log(data.email);
       setContact(data.email);
-      navigate("/verify-otp")
+      navigate("/auth/verify-otp")
     } catch (error) {
       toast.error(error?.response?.data?.message || "Registration failed.");
     }
@@ -173,7 +173,7 @@ const RegistrationForm = () => {
                 Already have an account?{" "}
                 <button
                   type="button"
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/auth/login")}
                   className="text-blue-600 font-medium hover:underline"
                 >
                   Login

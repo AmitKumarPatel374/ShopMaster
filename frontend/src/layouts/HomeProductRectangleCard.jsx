@@ -103,7 +103,7 @@ const HomeProductRectangleCard = ({ category }) => {
             className="p-2"
           >
             <div
-              onClick={() => navigate(`/${category}/${product.subCategory}/${product.item}`)}
+              onClick={() => navigate(`/product/${category}/${product.subCategory}/${product.item}`)}
               className="bg-white rounded-xl shadow-md p-3 flex flex-col items-center justify-center h-full"
             >
               <img

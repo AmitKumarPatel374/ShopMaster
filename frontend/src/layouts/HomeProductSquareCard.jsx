@@ -31,7 +31,7 @@ const HomeProductSquareCard = ({ category }) => {
         <h1 className="text-xl font-semibold">{`${category} Top Deals`}</h1>
 
         <button
-          onClick={() => navigate(`/${category}`)}
+          onClick={() => navigate(`/product/${category}`)}
           className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition"
         >
           <ArrowRight size={18} />
@@ -50,7 +50,7 @@ const HomeProductSquareCard = ({ category }) => {
       >
         {products.slice(0, 4).map((product, index) => (
           <div
-            onClick={() => navigate(`/${category}/${product.subCategory}/${product.item}`)}
+            onClick={() => navigate(`/product/${category}/${product.subCategory}/${product.item}`)}
             key={index}
             className="
               border border-gray-300 rounded-xl p-4 bg-white 

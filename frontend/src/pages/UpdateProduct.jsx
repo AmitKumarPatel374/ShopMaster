@@ -119,7 +119,7 @@ const UpdateProduct = () => {
       );
 
       toast.success(response.data.message || "Product updated successfully");
-      navigate(`/detail/${product_id}`);
+      navigate(`/product/detail/${product_id}`);
     } catch (error) {
       toast.error(error.response?.data?.message || "Update failed");
     }
@@ -130,7 +130,7 @@ const UpdateProduct = () => {
     try {
       await apiInstance.delete(`/admin/delete-product/${product_id}`);
       toast.success("Product deleted successfully");
-      navigate("/view-all-product");
+      navigate("/product/all");
     } catch (error) {
       toast.error("Failed to delete product");
     }

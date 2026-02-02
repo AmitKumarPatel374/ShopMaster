@@ -13,7 +13,7 @@ export const RegisterUserHook = () => {
       toast.success("Registration successful!");
 
       // optional delay to let toast appear
-      setTimeout(() => navigate("/login"), 1500);
+      setTimeout(() => navigate("/auth/login"), 1500);
     },
     onError:(error)=>{
       toast.error("Registration failed.");

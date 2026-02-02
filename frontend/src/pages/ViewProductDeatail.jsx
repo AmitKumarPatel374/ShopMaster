@@ -158,19 +158,19 @@ const ViewProductDetail = () => {
         <h3 className=" font-semibold">
           <span
             className="cursor-pointer"
-            onClick={() => navigate(`/view-all-product`)}
+            onClick={() => navigate(`/product/all`)}
           >
             {"Product->"}
           </span>
           <span
             className="cursor-pointer"
-            onClick={() => navigate(`/${product.category}`)}
+            onClick={() => navigate(`/product/${product.category}`)}
           >
             {`${product.category}->`}
           </span>
           <span
             className="cursor-pointer"
-            onClick={() => navigate(`/${product.category}/${product.subCategory}/${product.item}`)}
+            onClick={() => navigate(`/product/${product.category}/${product.subCategory}/${product.item}`)}
           >
             {`${product.item}->`}
           </span>
@@ -280,7 +280,7 @@ const ViewProductDetail = () => {
               {role === "seller" && (
                 <>
                   <button
-                    onClick={() => navigate(`/update-product/${product_id}`)}
+                    onClick={() => navigate(`/product/update-product/${product_id}`)}
                     className="action-btn flex-1 px-6 py-3 bg-gray-600 text-white font-semibold rounded-xl shadow-md hover:bg-gray-700 hover:shadow-lg transform hover:-translate-y-0.5 transition"
                   >
                     🔁 Update Product

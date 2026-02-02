@@ -50,7 +50,7 @@ const SearchItem = () => {
         <h3 className=" font-semibold">
           <span
             className="cursor-pointer"
-            onClick={() => navigate(`/view-all-product`)}
+            onClick={() => navigate(`/product/all`)}
           >
             {"Product->"}
           </span>

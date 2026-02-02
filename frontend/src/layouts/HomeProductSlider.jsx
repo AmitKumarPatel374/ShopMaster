@@ -22,37 +22,37 @@ const HomeProductSlider = () => {
     <div className="w-full h-[80vh] overflow-hidden relative rounded-xl mt-5 p-4 bg-gray-500">
       <Slider {...sliderSettings}>
         <img
-          onClick={() => navigate(`/${"Fashion"}`)}
+          onClick={() => navigate(`/product/${"Fashion"}`)}
           src="/Fashion.png"
           alt="fashion"
           className="w-full h-[75vh] object-cover rounded-xl"
         />
         <img
-          onClick={() => navigate(`/${"Home & Furniture"}`)}
+          onClick={() => navigate(`/product/${"Home & Furniture"}`)}
           src="/ferniture.jpeg"
           alt="furniture"
           className="w-full h-[75vh] object-cover rounded-xl"
         />
         <img
-          onClick={() => navigate(`/${"Electronics"}`)}
+          onClick={() => navigate(`/product/${"Electronics"}`)}
           src="/electronocs.png"
           alt="electronics"
           className="w-full h-[75vh] object-cover rounded-xl"
         />
         <img
-          onClick={() => navigate(`/${"Beauty & Food"}`)}
+          onClick={() => navigate(`/product/${"Beauty & Food"}`)}
           src="/beauty.jpeg"
           alt="beauty"
           className="w-full h-[75vh]object-cover rounded-xl"
         />
         <img
-          onClick={() => navigate(`/${"Grocery"}`)}
+          onClick={() => navigate(`/product/${"Grocery"}`)}
           src="/grocery.jpeg"
           alt="grocery"
           className="w-full h-[75vh] object-cover rounded-xl"
         />
         <img
-          onClick={() => navigate(`/${"Mobiles & Tablets"}`)}
+          onClick={() => navigate(`/product/${"Mobiles & Tablets"}`)}
           src="/mobile.jpeg"
           alt="mobile"
           className="w-full h-[75vh] object-cover object-top  rounded-xl"

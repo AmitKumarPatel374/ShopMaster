@@ -27,7 +27,7 @@ const Profile = () => {
       setError(null)
     } catch (error) {
       setError(error.response?.data?.message || "Failed to fetch profile")
-      if (error.response?.status === 401) navigate("/login")
+      if (error.response?.status === 401) navigate("/auth/login")
     } finally {
       setLoading(false)
     }
@@ -87,7 +87,7 @@ const Profile = () => {
       setToken(false)
       setRole(null)
       toast.success(response.data.message)
-      navigate("/login")
+      navigate("/auth/login")
     } catch (error) {
       console.log("Error in logout ->", error)
     }
@@ -188,7 +188,7 @@ const Profile = () => {
           {/* Buttons */}
           <div className="mt-8 flex flex-col sm:flex-row gap-4 w-full">
             <button
-              onClick={() => navigate("/update-user-profile")}
+              onClick={() => navigate("/user/update-profile")}
               className="btn-animate w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-indigo-300/50 transition-all duration-300"
             >
               Update Profile

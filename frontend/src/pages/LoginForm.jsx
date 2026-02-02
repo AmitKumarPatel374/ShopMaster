@@ -126,7 +126,7 @@ const LoginForm = () => {
                 <div className="text-right mt-2">
                   <button
                     type="button"
-                    onClick={() => navigate("/forgot-password")}
+                    onClick={() => navigate("/auth/forgot-password")}
                     className="text-sm text-blue-600 hover:underline"
                   >
                     Forgot password?
@@ -186,7 +186,7 @@ const LoginForm = () => {
                 Don’t have an account?{" "}
                 <button
                   type="button"
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate("/auth/register")}
                   className="text-blue-600 font-medium hover:underline"
                 >
                   Sign up

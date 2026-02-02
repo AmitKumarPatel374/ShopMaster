@@ -27,13 +27,13 @@ const CategoryBasedTopProduct = () => {
           <h3 className=" font-semibold">
             <span
               className="cursor-pointer"
-              onClick={() => navigate(`/view-all-product`)}
+              onClick={() => navigate(`/product/all`)}
             >
               {"Product->"}
             </span>
             <span
               className="cursor-pointer"
-              onClick={() => navigate(`/${category}`)}
+              onClick={() => navigate(`/product/${category}`)}
             >
               {category}
             </span>
@@ -62,7 +62,7 @@ const CategoryBasedTopProduct = () => {
             return (
               discount >= 30 && (
                 <div
-                  onClick={() => navigate(`/${category}/${product.subCategory}/${product.item}`)}
+                  onClick={() => navigate(`/product/${category}/${product.subCategory}/${product.item}`)}
                   key={index}
                   className="
                   border border-gray-300 rounded-xl p-4 bg-white 

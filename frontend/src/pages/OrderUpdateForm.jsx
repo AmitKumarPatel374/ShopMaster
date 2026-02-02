@@ -45,9 +45,9 @@ const OrderUpdateForm = () => {
   // UPDATE ORDER
   const updateOrder = async () => {
     try {
-      const res = await apiInstance.put(`/order/admin/order/update/${order_id}`, formData)
+      const res = await apiInstance.put(`/orders/seller/update/${order_id}`, formData)
       toast.success("Order updated successfully!")
-      navigate("/product/orders/seller")
+      navigate("/orders/seller")
     } catch (err) {
       console.log("update error", err)
     }
@@ -130,7 +130,7 @@ const OrderUpdateForm = () => {
           </button>
 
           <button
-            onClick={() => navigate("/product/orders/seller")}
+            onClick={() => navigate("/orders/seller")}
             className="w-full bg-gray-300 text-gray-900 py-3 rounded-lg font-semibold hover:bg-gray-400"
           >
             Cancel

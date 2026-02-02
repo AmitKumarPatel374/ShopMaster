@@ -217,7 +217,7 @@ const AdminOrders = () => {
                 Total Amount: {order.price?.totalAmount}
               </p>
               <button
-                onClick={() => Navigate(`/product/orders/seller/update/${order._id}`)}
+                onClick={() => Navigate(`/orders/seller/update/${order._id}`)}
                 className="mt-4 w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-md
                   hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all
                   flex justify-center items-center gap-2"

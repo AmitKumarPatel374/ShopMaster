@@ -91,7 +91,7 @@ const OrderPage = () => {
               </div>
 
               <button
-                onClick={() => navigate(`/product/orders/track/${order._id}`)}
+                onClick={() => navigate(`/orders/track/${order._id}`)}
                 className="px-5 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
               >
                 Track Order →

@@ -26,7 +26,7 @@ const ItemPageComponent = ({ items }) => {
           <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {items.map((items) => (
               <div
-                onClick={() => navigate(`/detail/${items._id}`)}
+                onClick={() => navigate(`/product/detail/${items._id}`)}
                 key={items._id || items.id}
                 className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between border border-gray-200"
               >

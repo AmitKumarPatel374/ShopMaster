@@ -49,19 +49,19 @@ const ProductItems = () => {
         <h3 className=" font-semibold">
           <span
             className="cursor-pointer"
-            onClick={() => navigate(`/view-all-product`)}
+            onClick={() => navigate(`/product/all`)}
           >
             {"Product->"}
           </span>
           <span
             className="cursor-pointer"
-            onClick={() => navigate(`/${category}`)}
+            onClick={() => navigate(`/product/${category}`)}
           >
             {`${category}->`}
           </span>
           <span
             className="cursor-pointer"
-            onClick={() => navigate(`/${category}/${subCategory}/${item}`)}
+            onClick={() => navigate(`/product/${category}/${subCategory}/${item}`)}
           >
             {item}
           </span>

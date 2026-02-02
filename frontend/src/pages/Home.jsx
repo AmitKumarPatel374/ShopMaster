@@ -104,14 +104,14 @@ const LandingPage = () => {
         <div className="hero-fade flex flex-col sm:flex-row justify-center gap-4">
           {role === "seller" ? (
             <button
-              onClick={() => (token ? navigate("/create-product") : navigate("/login"))}
+              onClick={() => (token ? navigate("/product/create") : navigate("/auth/login"))}
               className="bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 text-white px-6 py-3 rounded-md font-semibold transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-300/50 duration-300"
             >
               Sell Now
             </button>
           ) : (
             <button
-              onClick={() => (token ? navigate("/view-all-product") : navigate("/login"))}
+              onClick={() => (token ? navigate("/product/all") : navigate("/auth/login"))}
               className="bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 text-white px-6 py-3 rounded-md font-semibold transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-300/50 duration-300"
             >
               Shop Now
@@ -144,7 +144,7 @@ const LandingPage = () => {
               feels made just for you.
             </p>
             <button
-              onClick={() => navigate("/view-all-product")}
+              onClick={() => navigate("/product/all")}
               className="fade-in bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 text-white px-6 py-2 rounded-md font-medium transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-300/50 duration-300"
             >
               Start Shopping
@@ -170,7 +170,7 @@ const LandingPage = () => {
               insights and marketing tools, growing your business has never been easier.
             </p>
             <button
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/auth/register")}
               className="fade-in bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 text-white px-6 py-2 rounded-md font-medium transition transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-300/50 duration-300"
             >
               Become a Seller

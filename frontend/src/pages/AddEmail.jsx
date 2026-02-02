@@ -28,7 +28,7 @@ const AddEmail = () => {
       toast.success("OTP sent to your email")
 
       navigate(
-        `/verify-email?fid=${facebookId}&email=${encodeURIComponent(email)}`
+        `/auth/verify-email?fid=${facebookId}&email=${encodeURIComponent(email)}`
       )
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to send OTP")

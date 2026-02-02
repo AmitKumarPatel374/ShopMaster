@@ -62,7 +62,7 @@ const NavbarFilter = () => {
                           {sub.items.map((item, j) => (
                             <li
                               // onClick={()=>console.log(cat.name,sub.title,item)}
-                              onClick={() => navigate(`/filter/${cat.name}/${sub.title}/${item}`)}
+                              onClick={() => navigate(`/product/filter/${cat.name}/${sub.title}/${item}`)}
                               key={j}
                               className="text-gray-600 text-sm hover:text-blue-500"
                             >

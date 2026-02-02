@@ -41,7 +41,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    to="/view-all-product"
+                    to="/product/all"
                     className={animatedLink}
                   >
                     Products
@@ -57,7 +57,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    to="/user-profile"
+                    to="/user/profile"
                     className={animatedLink}
                   >
                     Profile
@@ -76,7 +76,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    to={`/view-seller-products/${user_id}`}
+                    to={`/admin/products`}
                     className={animatedLink}
                   >
                     Products
@@ -84,7 +84,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    to="/create-product"
+                    to="/product/create"
                     className={animatedLink}
                   >
                     Create Product
@@ -92,7 +92,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    to="/view-users"
+                    to="/admin/users"
                     className={animatedLink}
                   >
                     View Users
@@ -108,7 +108,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    to="/user-profile"
+                    to="/user/profile"
                     className={animatedLink}
                   >
                     Profile

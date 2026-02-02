@@ -26,7 +26,7 @@ const UpdateProfile = () => {
       setProfilePreview(userData.profileLogo || null);
     } catch (error) {
       setError(error.response?.data?.message || "Failed to fetch profile");
-      if (error.response?.status === 401) navigate("/login");
+      if (error.response?.status === 401) navigate("/auth/login");
     } finally {
       setLoading(false);
     }
@@ -137,7 +137,7 @@ const UpdateProfile = () => {
       });
 
       toast.success(response.data.message || "Profile updated successfully");
-      navigate("/user-profile");
+      navigate("/user/profile");
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to update profile");
     }

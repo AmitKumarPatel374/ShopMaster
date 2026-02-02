@@ -48,7 +48,7 @@ const ForgotPassword = () => {
     try {
       let response = await apiInstance.post("/auth/forgot-Password", data);
       if (response) toast.success(response?.data?.message);
-      navigate("/login");
+      navigate("/auth/login");
     } catch (error) {
       let errorMessage =
         error?.response?.data?.message ||
@@ -123,7 +123,7 @@ const ForgotPassword = () => {
         <p className="text-center text-gray-600 text-sm">
           Remember your password?{" "}
           <span
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/auth/login")}
             className="text-blue-600 hover:underline cursor-pointer font-medium"
           >
             Login

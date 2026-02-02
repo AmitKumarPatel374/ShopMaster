@@ -15,7 +15,7 @@ const PaymentPage = () => {
 
   const handleCOD = () => {
     toast.success("order placed successfully!")
-    navigate("/product/orders")
+    navigate("/orders")
     
   }
 
@@ -45,7 +45,7 @@ const PaymentPage = () => {
           })
           if (verifyRes.data.payment?.status === "paid") {
             toast.success("Payment Success!")
-            navigate("/product/orders")
+            navigate("/orders")
             // ---- IMPORTANT ----
             // Now create order here
             await orderHandler()

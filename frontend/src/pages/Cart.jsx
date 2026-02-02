@@ -101,7 +101,7 @@ const Cart = () => {
         {/* CART ITEMS */}
         {cartItems.map((item) => (
           <div
-            onClick={() => navigate(`/detail/${item.productId._id}`)}
+            onClick={() => navigate(`/product/detail/${item.productId._id}`)}
             key={item.productId._id}
             className="cart-card flex items-center gap-6 p-5 bg-white rounded-2xl shadow-lg border"
           >
