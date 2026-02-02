@@ -79,6 +79,8 @@ const Cart = () => {
       return false
     }
 
+    
+
     const owners = cartItems.map((item) => item.productId.createdBy)
 
     // Check if all owners are same

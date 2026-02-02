@@ -45,7 +45,7 @@ const OrderUpdateForm = () => {
   // UPDATE ORDER
   const updateOrder = async () => {
     try {
-      const res = await apiInstance.put(`/orders/seller/update/${order_id}`, formData)
+      const res = await apiInstance.put(`/order/admin/order/update/${order_id}`, formData)
       toast.success("Order updated successfully!")
       navigate("/orders/seller")
     } catch (err) {

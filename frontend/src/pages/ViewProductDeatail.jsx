@@ -280,7 +280,7 @@ const ViewProductDetail = () => {
               {role === "seller" && (
                 <>
                   <button
-                    onClick={() => navigate(`/product/update-product/${product_id}`)}
+                    onClick={() => navigate(`/product/update/${product_id}`)}
                     className="action-btn flex-1 px-6 py-3 bg-gray-600 text-white font-semibold rounded-xl shadow-md hover:bg-gray-700 hover:shadow-lg transform hover:-translate-y-0.5 transition"
                   >
                     🔁 Update Product

@@ -21,7 +21,7 @@ const Nav = () => {
 
   const searchHandler = () => {
     if (!searchValue.trim()) return
-    navigate(`/search/${searchValue}`)
+    navigate(`/product/search/${searchValue}`)
   }
 
   // Mobile Menu GSAP Animation

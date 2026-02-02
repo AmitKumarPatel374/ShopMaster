@@ -95,7 +95,7 @@ const CreateProduct = () => {
       toast.success(response?.data?.message || "Product created successfully!")
       reset()
       setImages([])
-      navigate(`/view-seller-products/${user_id}`)
+      navigate(`/admin/products`)
     } catch (error) {
       const errorMessage = error?.response?.data?.message || "Product creation failed!"
       toast.error(errorMessage)
