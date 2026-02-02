@@ -13,7 +13,7 @@ router.get("/product-detail/:product_id", authMiddleware, productDetailControlle
 router.get("/search",searchProductController);
 router.get("/cart",authMiddleware, fetchProductFromCart);
 router.put("/cart/update", authMiddleware, updateCartQuantity);
-router.delete("/cart/delete/:id", deleteCartItem);
+router.delete("/cart/delete/:id",authMiddleware, deleteCartItem);
 router.get("/:category",getProductByCategoryController);
 router.get("/:category/:subCategory/:item",getProductByItemCategoryController);
 router.get("/filter/:category/:subCategory/:item",getProductByItemCategoryController);

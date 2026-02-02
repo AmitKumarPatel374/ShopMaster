@@ -491,7 +491,7 @@ const facebookController = async (req, res) => {
       // If email missing → redirect to add-email
       if (!email) {
         return res.redirect(
-          `${process.env.CLIENT_ORIGIN}/add-email?fid=${profile.id}`
+          `${process.env.CLIENT_ORIGIN}/auth/add-email?fid=${profile.id}`
         )
       }
 

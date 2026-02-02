@@ -516,7 +516,7 @@ const deleteCartItem = async (req, res) => {
     console.log(req.user)
 
     const productId = req.params.id
-
+  
     await UserModel.findByIdAndUpdate(
       userId,
       {
