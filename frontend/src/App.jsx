@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom"
 import { AnimatePresence } from "framer-motion"
 import Nav from "./components/Nav"
 import Footer from "./components/Footer"
-import UserRoutes from "./routes/UserRoutes"
+import UserRoutes from "./routes/AppRoutes"
 
 import LoginForm from "./pages/LoginForm"
 import RegistrationForm from "./pages/RegistrationForm"

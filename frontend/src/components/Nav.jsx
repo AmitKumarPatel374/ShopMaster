@@ -88,7 +88,7 @@ const Nav = () => {
                 Home
               </NavLink>
               <NavLink
-                to="/view-all-product"
+                to="/product/all"
                 className={linkClass}
               >
                 Products
@@ -100,7 +100,7 @@ const Nav = () => {
                 About
               </NavLink>
               <NavLink
-                to="/product/orders"
+                to="/orders"
                 className={linkClass}
               >
                 Orders
@@ -113,7 +113,7 @@ const Nav = () => {
                 <ShoppingCart />
               </NavLink>
               <NavLink
-                to="/user-profile"
+                to="/user/profile"
                 className={linkClass}
               >
                 Profile
@@ -128,26 +128,26 @@ const Nav = () => {
                 Home
               </NavLink>
               <NavLink
-                to={`/view-seller-products`}
+                to={`/admin/products`}
                 className={linkClass}
               >
                 Products
               </NavLink>
               <NavLink
-                to="/create-product"
+                to="/product/create"
                 className={linkClass}
               >
                 Create Product
               </NavLink>
               <NavLink
-                to="/product/orders/seller"
+                to="/orders/seller"
                 onClick={toggleMenu}
                 className={linkClass}
               >
                 Orders
               </NavLink>
               <NavLink
-                to="/view-users"
+                to="/admin/users"
                 className={linkClass}
               >
                 View Users
@@ -159,7 +159,7 @@ const Nav = () => {
                 About
               </NavLink>
               <NavLink
-                to="/user-profile"
+                to="/user/profile"
                 className={linkClass}
               >
                 Profile
@@ -237,7 +237,7 @@ const Nav = () => {
                   Home
                 </NavLink>
                 <NavLink
-                  to="/view-all-product"
+                  to="/product/all"
                   onClick={toggleMenu}
                   className={linkClass}
                 >
@@ -251,7 +251,7 @@ const Nav = () => {
                   About
                 </NavLink>
                 <NavLink
-                  to="/product/orders"
+                  to="/orders"
                   className={linkClass}
                 >
                   Orders
@@ -265,7 +265,7 @@ const Nav = () => {
                   <ShoppingCart />
                 </NavLink>
                 <NavLink
-                  to="/user-profile"
+                  to="/user/profile"
                   onClick={toggleMenu}
                   className={linkClass}
                 >
@@ -282,28 +282,28 @@ const Nav = () => {
                   Home
                 </NavLink>
                 <NavLink
-                  to={`/view-seller-products`}
+                  to={`/admin/products`}
                   onClick={toggleMenu}
                   className={linkClass}
                 >
                   Products
                 </NavLink>
                 <NavLink
-                  to="/create-product"
+                  to="/product/create"
                   onClick={toggleMenu}
                   className={linkClass}
                 >
                   Create Product
                 </NavLink>
                 <NavLink
-                  to="/view-users"
+                  to="/admin/users"
                   onClick={toggleMenu}
                   className={linkClass}
                 >
                   View Users
                 </NavLink>
                 <NavLink
-                  to="/product/orders/seller"
+                  to="/orders/seller"
                   onClick={toggleMenu}
                   className={linkClass}
                 >
@@ -317,7 +317,7 @@ const Nav = () => {
                   About
                 </NavLink>
                 <NavLink
-                  to="/user-profile"
+                  to="/user/profile"
                   onClick={toggleMenu}
                   className={linkClass}
                 >
