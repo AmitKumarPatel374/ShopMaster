@@ -6,12 +6,6 @@ import VerifyContact from "../pages/auth/VerifyContact"
 import VerifyFacebookEmail from "../pages/auth/VerifyFacebookEmail"
 import { Routes, Route } from "react-router-dom"
 
-// import RegistrationForm from "../pages/RegistrationForm"
-// import LoginForm from "../pages/LoginForm"
-// import ForgotPassword from "../pages/ForgotPassword"
-// import VerifyContact from "../pages/VerifyContact"
-// import AddEmail from "../pages/AddEmail"
-// import VerifyFacebookEmail from "../pages/VerifyFacebookEmail"
 
 const AuthRoutes = () => {
   return (

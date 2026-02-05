@@ -5,7 +5,6 @@ import Nav from "./components/Nav"
 import Footer from "./components/Footer"
 import UserRoutes from "./routes/AppRoutes"
 
-// import LoginForm from "./pages/LoginForm"
 import NavbarFilter from "./components/NavbarFilter"
 import HomeProductSquareCard from "./layouts/HomeProductSquareCard"
 import LoginForm from "./pages/auth/LoginForm"

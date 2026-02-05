@@ -9,9 +9,6 @@ import About from "../pages/public/About"
 import Home from "../pages/public/Home"
 import PageNotFound from "../pages/common/PageNotFound"
 
-// import Home from "../pages/Home"
-// import About from "../pages/public/About"
-// import PageNotFound from "../pages/common/PageNotFound"
 
 const AppRoutes = () => {
   return (
