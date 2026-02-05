@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import apiInstance from "../config/apiInstance";
+import apiInstance from "../../config/apiInstance";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { gsap } from "gsap";

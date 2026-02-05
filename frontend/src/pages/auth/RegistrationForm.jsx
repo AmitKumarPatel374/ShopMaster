@@ -4,9 +4,9 @@ import { User, Mail, Phone, Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import apiInstance from '../config/apiInstance';
-import { RegisterUserHook } from "../hooks/AuthHooks";
-import { usercontext } from "../context/DataContext"
+import apiInstance from '../../config/apiInstance';
+import { RegisterUserHook } from "../../hooks/AuthHooks";
+import { usercontext } from "../../context/DataContext"
 
 const RegistrationForm = () => {
   

@@ -1,9 +1,13 @@
+import AdminOrders from "../pages/admin/AdminOrders"
+import OrderPage from "../pages/order/OrderPage"
+import OrderUpdateForm from "../pages/order/OrderUpdateForm"
+import TrackOrder from "../pages/order/TrackOrder"
 import { Routes, Route } from "react-router-dom"
 
-import OrderPage from "../pages/OrderPage"
-import TrackOrder from "../pages/TrackOrder"
-import AdminOrders from "../pages/AdminOrders"
-import OrderUpdateForm from "../pages/OrderUpdateForm"
+// import OrderPage from "../pages/OrderPage"
+// import TrackOrder from "../pages/TrackOrder"
+// import AdminOrders from "../pages/AdminOrders"
+// import OrderUpdateForm from "../pages/OrderUpdateForm"
 
 const OrderRoutes = () => {
   return (

@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { toast } from "react-toastify"
-import apiInstance from "../config/apiInstance"
-import { usercontext } from "../context/DataContext"
+import apiInstance from "../../config/apiInstance"
+import { usercontext } from "../../context/DataContext"
 import { useNavigate } from "react-router-dom"
 
 gsap.registerPlugin(ScrollTrigger)

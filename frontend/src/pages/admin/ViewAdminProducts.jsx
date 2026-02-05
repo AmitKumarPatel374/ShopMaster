@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import apiInstance from '../config/apiInstance';
+import apiInstance from '../../config/apiInstance';
 import { useNavigate, useParams } from "react-router-dom";
-import { usercontext } from "../context/DataContext";
+import { usercontext } from "../../context/DataContext";
 import { toast } from "react-toastify";
 
 const ViewAdminProducts = () => {

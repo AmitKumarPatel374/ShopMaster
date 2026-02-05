@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import { useNavigate } from "react-router-dom"
-import { usercontext } from "../context/DataContext"
+import { usercontext } from "../../context/DataContext"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 

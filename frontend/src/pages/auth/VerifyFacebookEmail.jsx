@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import { toast } from "react-toastify"
 import { motion } from "framer-motion"
 import { ShieldCheck, RefreshCw, ArrowRight } from "lucide-react"
-import { usercontext } from "../context/DataContext"
+import { usercontext } from "../../context/DataContext"
 
 
 const RESEND_TIME = 60 // seconds

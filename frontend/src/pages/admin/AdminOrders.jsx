@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import { MapPin, Truck, CheckCircle, IndianRupee, Clock } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 

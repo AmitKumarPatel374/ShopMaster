@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useContext } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { usercontext } from "../context/DataContext"
+import { usercontext } from "../../context/DataContext"
 import { useNavigate } from "react-router-dom"
 
 gsap.registerPlugin(ScrollTrigger)

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import { toast } from "react-toastify"
-import { usercontext } from "../context/DataContext"
+import { usercontext } from "../../context/DataContext"
 import { useNavigate } from "react-router-dom"
 
 const PaymentPage = () => {

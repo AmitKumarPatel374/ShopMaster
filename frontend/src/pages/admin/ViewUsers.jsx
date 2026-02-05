@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import apiInstance from "../config/apiInstance";
+import apiInstance from "../../config/apiInstance";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { User, Mail, Shield } from "lucide-react";

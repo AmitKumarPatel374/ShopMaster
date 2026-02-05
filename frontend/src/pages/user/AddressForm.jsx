@@ -1,6 +1,6 @@
-import { usercontext } from "../context/DataContext"
-import GetDeliveryAddress from "../components/GetDeliveryAddress"
-import AddressFormLayout from "../layouts/AddressFormLayout"
+import { usercontext } from "../../context/DataContext"
+import GetDeliveryAddress from "../../components/GetDeliveryAddress"
+import AddressFormLayout from "../../layouts/AddressFormLayout"
 import React, { useContext, useEffect, useState } from "react"
 
 const AddressForm = () => {

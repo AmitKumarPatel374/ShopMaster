@@ -5,10 +5,11 @@ import Nav from "./components/Nav"
 import Footer from "./components/Footer"
 import UserRoutes from "./routes/AppRoutes"
 
-import LoginForm from "./pages/LoginForm"
-import RegistrationForm from "./pages/RegistrationForm"
+// import LoginForm from "./pages/LoginForm"
 import NavbarFilter from "./components/NavbarFilter"
 import HomeProductSquareCard from "./layouts/HomeProductSquareCard"
+import LoginForm from "./pages/auth/LoginForm"
+import RegistrationForm from "./pages/auth/RegistrationForm"
 
 const App = () => {
   const [toggle, setToggle] = useState(true)

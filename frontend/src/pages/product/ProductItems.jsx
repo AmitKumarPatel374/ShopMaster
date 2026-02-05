@@ -1,30 +1,29 @@
-import ItemPageComponent from "../components/ItemPageComponent"
-import NavbarFilter from "../components/NavbarFilter"
-import apiInstance from "../config/apiInstance"
+import NavbarFilter from "../../components/NavbarFilter"
+import ItemPageComponent from "../../components/ItemPageComponent"
+import apiInstance from "../../config/apiInstance"
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify"
 
-const SearchItem = () => {
+const ProductItems = () => {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const navigate = useNavigate();
-
-  const {searchValue}=useParams();
+  const { category,subCategory, item } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const searchProducts = async () => {
+    const fetchItems = async () => {
       try {
-        const response = await apiInstance.get(`/product/search?q=${searchValue}`)
-        setItems(response.data.products)
+        const response = await apiInstance.get(`/product/${category}/${subCategory}/${item}`)
+        setItems(response.data.items)
       } catch (err) {
         setError(err.message)
       } finally {
         setLoading(false)
       }
     }
-
-    searchProducts()
+    fetchItems()
   }, [])
 
   if (loading)
@@ -54,7 +53,18 @@ const SearchItem = () => {
           >
             {"Product->"}
           </span>
-          <span>{"search"}</span>
+          <span
+            className="cursor-pointer"
+            onClick={() => navigate(`/product/${category}`)}
+          >
+            {`${category}->`}
+          </span>
+          <span
+            className="cursor-pointer"
+            onClick={() => navigate(`/product/${category}/${subCategory}/${item}`)}
+          >
+            {item}
+          </span>
         </h3>
       </div>
 
@@ -63,4 +73,4 @@ const SearchItem = () => {
   )
 }
 
-export default SearchItem
+export default ProductItems

@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form"
 import { Mail, Eye, EyeOff } from "lucide-react"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
-import { usercontext } from "../context/DataContext"
-import apiInstance from "../config/apiInstance"
+import { usercontext } from "../../context/DataContext"
+import apiInstance from "../../config/apiInstance"
 import { motion } from "framer-motion"
 
 const LoginForm = () => {

@@ -4,7 +4,7 @@ import { Mail } from "lucide-react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
-import apiInstance from "../config/apiInstance";
+import apiInstance from "../../config/apiInstance";
 
 const ForgotPassword = () => {
   const {

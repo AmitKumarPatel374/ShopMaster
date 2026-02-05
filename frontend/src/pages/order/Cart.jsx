@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef, useContext } from "react"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Delete } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { usercontext } from "../context/DataContext"
+import { usercontext } from "../../context/DataContext"
 import { toast } from "react-toastify"
 
 gsap.registerPlugin(ScrollTrigger)

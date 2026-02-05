@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 

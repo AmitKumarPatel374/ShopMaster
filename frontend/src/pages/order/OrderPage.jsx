@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import { useNavigate } from "react-router-dom"
 
 const OrderPage = () => {

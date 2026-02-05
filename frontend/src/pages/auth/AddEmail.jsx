@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import { toast } from "react-toastify"
 import { motion } from "framer-motion"
 import { Mail, ArrowRight, ShieldCheck } from "lucide-react"

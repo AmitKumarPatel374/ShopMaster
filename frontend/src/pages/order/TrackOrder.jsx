@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import apiInstance from "../config/apiInstance";
+import apiInstance from "../../config/apiInstance";
 import { useParams } from "react-router-dom";
 import { CheckCircle, MapPin, Truck, Home } from "lucide-react";
 

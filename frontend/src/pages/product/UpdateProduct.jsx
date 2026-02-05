@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import apiInstance from "../config/apiInstance";
-import { usercontext } from "../context/DataContext";
+import apiInstance from "../../config/apiInstance";
+import { usercontext } from "../../context/DataContext";
 
 const UpdateProduct = () => {
   const { product_id } = useParams();

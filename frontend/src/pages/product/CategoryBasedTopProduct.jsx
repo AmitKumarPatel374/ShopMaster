@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { productByCateGory } from "../Service/ProductFilterByCategoryService"
+import { productByCateGory } from "../../Service/ProductFilterByCategoryService"
 import { useNavigate, useParams } from "react-router-dom"
-import NavbarFilter from "../components/NavbarFilter"
+import NavbarFilter from "../../components/NavbarFilter"
 
 const CategoryBasedTopProduct = () => {
   const { category } = useParams()

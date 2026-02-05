@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { Mail, Phone, Shield, Calendar, ArrowLeft } from "lucide-react"
-import apiInstance from "../config/apiInstance"
+import apiInstance from "../../config/apiInstance"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
