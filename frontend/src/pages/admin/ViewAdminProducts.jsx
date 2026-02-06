@@ -6,6 +6,7 @@ import apiInstance from '../../config/apiInstance';
 import { useNavigate, useParams } from "react-router-dom";
 import { usercontext } from "../../context/DataContext";
 import { toast } from "react-toastify";
+import NavbarFilter from "../../components/NavbarFilter";
 
 const ViewAdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -66,8 +67,9 @@ const ViewAdminProducts = () => {
   };
 
   return (
-    <div className="px-4 sm:px-6 py-10 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-      <h1 className="text-3xl sm:text-4xl font-bold mb-10 text-center text-gray-800 tracking-wide">
+    <div className="px-4 sm:px-6  bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+      <NavbarFilter />
+      <h1 className="text-3xl sm:text-4xl mt-5 font-bold mb-10 text-center text-gray-800 tracking-wide">
         🛍️ All Products
       </h1>
 

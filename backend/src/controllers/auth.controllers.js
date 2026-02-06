@@ -450,10 +450,10 @@ const googleController = async (req, res) => {
 
     res.cookie("token", token, getCookieOptions())
    
-    await emailQueue.add("google_alert",{
-      email:user.email,
-      name:user.fullname
-    })
+    // await emailQueue.add("google_alert",{
+    //   email:user.email,
+    //   name:user.fullname
+    // })
 
     const redirectUrl = process.env.CLIENT_ORIGIN
     res.redirect(redirectUrl)
