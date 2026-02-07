@@ -1,58 +1,54 @@
-import React, { useContext, useEffect, useState } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import apiInstance from '../../config/apiInstance';
-import { useNavigate, useParams } from "react-router-dom";
-import { usercontext } from "../../context/DataContext";
-import { toast } from "react-toastify";
-import NavbarFilter from "../../components/NavbarFilter";
+import React, { useContext, useEffect, useState } from "react"
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import apiInstance from "../../config/apiInstance"
+import { useNavigate, useParams } from "react-router-dom"
+import { usercontext } from "../../context/DataContext"
+import { toast } from "react-toastify"
+import NavbarFilter from "../../components/NavbarFilter"
 
 const ViewAdminProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const navigate = useNavigate()
   // const { role } = useContext(usercontext);
   // const { user_id } = useParams();
   const { user_id } = useContext(usercontext)
 
- useEffect(() => {
-  if (!user_id) return // wait until auth loads
+  useEffect(() => {
+    if (!user_id) return // wait until auth loads
 
-  const fetchProducts = async () => {
-    try {
-      setLoading(true)
-      const response = await apiInstance.get(
-        `/admin/get-Your-products/${user_id}`
-      )
-      setProducts(response.data.products || [])
-      setError(null)
-    } catch (err) {
-      setError(err.message)
-      setProducts([])
-    } finally {
-      setLoading(false)
+    const fetchProducts = async () => {
+      try {
+        setLoading(true)
+        const response = await apiInstance.get(`/admin/get-Your-products/${user_id}`)
+        setProducts(response.data.products || [])
+        setError(null)
+      } catch (err) {
+        setError(err.message)
+        setProducts([])
+      } finally {
+        setLoading(false)
+      }
     }
-  }
 
-  fetchProducts()
-}, [user_id])
-
-
+    fetchProducts()
+  }, [user_id])
 
   const deleteHandler = async (id) => {
     try {
-      const response = await apiInstance.delete(`/admin/delete-product/${id}`);
-      setProducts((prevProducts) => prevProducts.filter((p) => p._id !== id));
-      toast.success(response.data.message);
+      const response = await apiInstance.delete(`/admin/delete-product/${id}`)
+      setProducts((prevProducts) => prevProducts.filter((p) => p._id !== id))
+      toast.success(response.data.message)
     } catch (error) {
-      console.log("error in deleting->", error);
+      console.log("error in deleting->", error)
     }
-  };
+  }
 
-  if (loading) return <p className="text-center mt-10">Loading products...</p>;
-  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
+  if (loading) return <p className="text-center mt-10">Loading products...</p>
+  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>
 
   const sliderSettings = {
     dots: true,
@@ -64,7 +60,7 @@ const ViewAdminProducts = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
-  };
+  }
 
   return (
     <div className="px-4 sm:px-6  bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
@@ -84,9 +80,15 @@ const ViewAdminProducts = () => {
               {/* 🖼️ Image Section */}
               <div className="relative w-full h-56 sm:h-64 border-b rounded-t-2xl overflow-hidden">
                 {product.images.length > 1 ? (
-                  <Slider {...sliderSettings} className="w-full h-full">
+                  <Slider
+                    {...sliderSettings}
+                    className="w-full h-full"
+                  >
                     {product.images.map((image, index) => (
-                      <div key={index} className="flex justify-center items-center h-56 sm:h-64">
+                      <div
+                        key={index}
+                        className="flex justify-center items-center h-56 sm:h-64"
+                      >
                         <img
                           src={image}
                           alt={product.title}
@@ -148,7 +150,6 @@ const ViewAdminProducts = () => {
                     </span>
                   </p>
                 )}
-
               </div>
             </div>
           ))}
@@ -176,7 +177,7 @@ const ViewAdminProducts = () => {
         }
       `}</style>
     </div>
-  );
-};
+  )
+}
 
-export default ViewAdminProducts;
+export default ViewAdminProducts

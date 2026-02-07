@@ -23,13 +23,11 @@ const AddEmail = () => {
       setLoading(true)
       await apiInstance.post("/auth/add-email", {
         email,
-        facebookId
+        facebookId,
       })
       toast.success("OTP sent to your email")
 
-      navigate(
-        `/auth/verify-email?fid=${facebookId}&email=${encodeURIComponent(email)}`
-      )
+      navigate(`/auth/verify-email?fid=${facebookId}&email=${encodeURIComponent(email)}`)
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to send OTP")
     } finally {
@@ -48,11 +46,12 @@ const AddEmail = () => {
         {/* Header */}
         <div className="flex flex-col items-center mb-6">
           <div className="bg-blue-100 p-4 rounded-full mb-3">
-            <ShieldCheck className="text-blue-600" size={32} />
+            <ShieldCheck
+              className="text-blue-600"
+              size={32}
+            />
           </div>
-          <h2 className="text-2xl font-bold text-gray-800">
-            Secure Your Account
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-800">Secure Your Account</h2>
           <p className="text-sm text-gray-500 text-center mt-1">
             Facebook didn’t share your email. Add one to protect your account.
           </p>
@@ -86,8 +85,7 @@ const AddEmail = () => {
 
         {/* Footer */}
         <p className="text-xs text-gray-400 text-center mt-4">
-          We’ll send a 6-digit verification code to your email. This helps keep
-          your account safe.
+          We’ll send a 6-digit verification code to your email. This helps keep your account safe.
         </p>
       </motion.div>
     </div>

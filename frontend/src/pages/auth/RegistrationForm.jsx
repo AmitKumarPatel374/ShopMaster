@@ -1,44 +1,47 @@
-import React, { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { User, Mail, Phone, Eye, EyeOff } from "lucide-react";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import apiInstance from '../../config/apiInstance';
-import { RegisterUserHook } from "../../hooks/AuthHooks";
+import React, { useContext, useState } from "react"
+import { useForm } from "react-hook-form"
+import { User, Mail, Phone, Eye, EyeOff } from "lucide-react"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
+import { motion } from "framer-motion"
+import apiInstance from "../../config/apiInstance"
+import { RegisterUserHook } from "../../hooks/AuthHooks"
 import { usercontext } from "../../context/DataContext"
 
 const RegistrationForm = () => {
-  
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm()
+  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
 
-  const mutation = RegisterUserHook();
+  const mutation = RegisterUserHook()
   const { setToken, setRole, setContact } = useContext(usercontext)
 
   const onSubmit = async (data) => {
-     try {
-      const response = await apiInstance.post("/auth/register", data);
-      if (response) toast.success(response?.data?.message);
-      console.log(data.email);
-      setContact(data.email);
+    try {
+      const response = await apiInstance.post("/auth/register", data)
+      if (response) toast.success(response?.data?.message)
+      console.log(data.email)
+      setContact(data.email)
       navigate("/auth/verify-otp")
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Registration failed.");
+      toast.error(error?.response?.data?.message || "Registration failed.")
     }
-  };
+  }
 
   const handleGoogleLogin = () => {
-    const googleAuthUrl = `${import.meta.env.VITE_SERVER_URL}/auth/google`;
-    window.location.href = googleAuthUrl;
-  };
+    const googleAuthUrl = `${import.meta.env.VITE_SERVER_URL}/auth/google`
+    window.location.href = googleAuthUrl
+  }
 
   const pageVariants = {
     initial: { opacity: 0, x: 100 },
     animate: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
     exit: { opacity: 0, x: -100, transition: { duration: 0.5, ease: "easeIn" } },
-  };
+  }
 
   return (
     <motion.div
@@ -62,13 +65,20 @@ const RegistrationForm = () => {
         <div className="p-8 md:p-12 flex flex-col justify-center">
           <div className="max-w-md mx-auto w-full">
             <div className="flex justify-center items-center gap-3 mb-6">
-              <img className="h-20" src="/myLogo.png" alt="" />
+              <img
+                className="h-20"
+                src="/myLogo.png"
+                alt=""
+              />
             </div>
             <p className="text-gray-500 mb-6 text-center">
               Create your new account and get started
             </p>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-4"
+            >
               {/* FULL NAME */}
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -144,7 +154,12 @@ const RegistrationForm = () => {
                   defaultValue=""
                   className={`w-full px-3 py-2 border rounded-md text-sm bg-white focus:ring-2 focus:ring-purple-300 ${errors.role ? "border-red-500" : "border-gray-200"}`}
                 >
-                  <option value="" disabled>Select Role</option>
+                  <option
+                    value=""
+                    disabled
+                  >
+                    Select Role
+                  </option>
                   <option value="user">User</option>
                   <option value="seller">Seller</option>
                 </select>
@@ -156,7 +171,11 @@ const RegistrationForm = () => {
                 onClick={handleGoogleLogin}
                 className="w-full border border-gray-200 bg-white hover:bg-gray-100 text-gray-700 font-medium py-2 rounded-md text-sm flex items-center justify-center gap-2 transition"
               >
-                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" className="w-5 h-5" />
+                <img
+                  src="https://developers.google.com/identity/images/g-logo.png"
+                  alt="Google"
+                  className="w-5 h-5"
+                />
                 Sign up with Google
               </button>
 
@@ -184,7 +203,7 @@ const RegistrationForm = () => {
         </div>
       </div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default RegistrationForm;
+export default RegistrationForm

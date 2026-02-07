@@ -1,31 +1,31 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import apiInstance from "../../config/apiInstance";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { User, Mail, Shield } from "lucide-react";
+import React, { useEffect, useState, useRef } from "react"
+import { useNavigate } from "react-router-dom"
+import apiInstance from "../../config/apiInstance"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { User, Mail, Shield } from "lucide-react"
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
 const ViewUsers = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const containerRef = useRef(null);
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+  const containerRef = useRef(null)
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        let response = await apiInstance.get("/admin/get-users");
-        setUsers(response.data.users);
+        let response = await apiInstance.get("/admin/get-users")
+        setUsers(response.data.users)
       } catch (error) {
-        console.log("Error fetching users", error);
+        console.log("Error fetching users", error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    fetchUsers();
-  }, []);
+    }
+    fetchUsers()
+  }, [])
 
   // ✅ GSAP animations
   useEffect(() => {
@@ -35,7 +35,7 @@ const ViewUsers = () => {
           ".page-title",
           { opacity: 0, y: -30 },
           { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
-        );
+        )
 
         gsap.fromTo(
           ".user-card",
@@ -51,20 +51,18 @@ const ViewUsers = () => {
               start: "top 90%",
             },
           }
-        );
-      }, containerRef);
-      return () => ctx.revert();
+        )
+      }, containerRef)
+      return () => ctx.revert()
     }
-  }, [users, loading]);
+  }, [users, loading])
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-100">
-        <p className="text-lg font-semibold text-gray-700 animate-pulse">
-          Loading users...
-        </p>
+        <p className="text-lg font-semibold text-gray-700 animate-pulse">Loading users...</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -106,18 +104,22 @@ const ViewUsers = () => {
 
                 {/* Info */}
                 <div className="text-center">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-1">
-                    {user.fullname}
-                  </h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-1">{user.fullname}</h3>
                   <p className="text-gray-500 text-sm mb-4">@{user.username}</p>
 
                   <div className="space-y-3 text-sm text-gray-700">
                     <div className="flex items-center justify-center gap-2">
-                      <Mail size={16} className="text-blue-500" />
+                      <Mail
+                        size={16}
+                        className="text-blue-500"
+                      />
                       <span>{user.email}</span>
                     </div>
                     <div className="flex items-center justify-center gap-2">
-                      <Shield size={16} className="text-purple-500" />
+                      <Shield
+                        size={16}
+                        className="text-purple-500"
+                      />
                       <span className="capitalize">{user.role}</span>
                     </div>
                   </div>
@@ -130,7 +132,7 @@ const ViewUsers = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ViewUsers;
+export default ViewUsers

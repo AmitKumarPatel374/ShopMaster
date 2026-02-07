@@ -1,20 +1,20 @@
-import React, { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-import { Mail } from "lucide-react";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { gsap } from "gsap";
-import apiInstance from "../../config/apiInstance";
+import React, { useEffect, useRef } from "react"
+import { useForm } from "react-hook-form"
+import { Mail } from "lucide-react"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
+import { gsap } from "gsap"
+import apiInstance from "../../config/apiInstance"
 
 const ForgotPassword = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm()
 
-  const navigate = useNavigate();
-  const formRef = useRef(null);
+  const navigate = useNavigate()
+  const formRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -29,7 +29,7 @@ const ForgotPassword = () => {
           duration: 1.2,
           ease: "power3.out",
         }
-      );
+      )
 
       // Floating logo animation
       gsap.to(".forgot-logo", {
@@ -38,25 +38,23 @@ const ForgotPassword = () => {
         yoyo: true,
         ease: "sine.inOut",
         duration: 2.5,
-      });
-    });
+      })
+    })
 
-    return () => ctx.revert();
-  }, []);
+    return () => ctx.revert()
+  }, [])
 
   const onSubmit = async (data) => {
     try {
-      let response = await apiInstance.post("/auth/forgot-Password", data);
-      if (response) toast.success(response?.data?.message);
-      navigate("/auth/login");
+      let response = await apiInstance.post("/auth/forgot-Password", data)
+      if (response) toast.success(response?.data?.message)
+      navigate("/auth/login")
     } catch (error) {
-      let errorMessage =
-        error?.response?.data?.message ||
-        "Failed to send reset link, try again!";
-      toast.error(errorMessage);
-      console.error(error);
+      let errorMessage = error?.response?.data?.message || "Failed to send reset link, try again!"
+      toast.error(errorMessage)
+      console.error(error)
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-blue-100 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -82,7 +80,10 @@ const ForgotPassword = () => {
 
         {/* Email Input */}
         <div>
-          <label htmlFor="email" className="sr-only">
+          <label
+            htmlFor="email"
+            className="sr-only"
+          >
             Email Address
           </label>
           <div className="relative">
@@ -103,11 +104,7 @@ const ForgotPassword = () => {
               }`}
             />
           </div>
-          {errors.email && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.email.message}
-            </p>
-          )}
+          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
         </div>
 
         {/* Submit Button */}
@@ -135,7 +132,7 @@ const ForgotPassword = () => {
       <div className="absolute -top-20 -left-20 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 -right-20 w-72 h-72 bg-purple-300 opacity-20 rounded-full blur-3xl"></div>
     </div>
-  );
-};
+  )
+}
 
-export default ForgotPassword;
+export default ForgotPassword

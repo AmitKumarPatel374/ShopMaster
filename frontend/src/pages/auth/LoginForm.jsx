@@ -21,10 +21,10 @@ const LoginForm = () => {
     try {
       let response = await apiInstance.post("/auth/login", data)
       if (response?.status === 200) {
-        console.log(response);
+        console.log(response)
         toast.success(response?.data?.message || "login successfully!")
-        setToken(true);
-        setRole(response.data.user.role);
+        setToken(true)
+        setRole(response.data.user.role)
         navigate("/")
       }
     } catch (error) {

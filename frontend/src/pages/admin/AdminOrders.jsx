@@ -25,8 +25,7 @@ const AdminOrders = () => {
     }
   }
 
-  console.log(orders);
-  
+  console.log(orders)
 
   useEffect(() => {
     fetchOrders()

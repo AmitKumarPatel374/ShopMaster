@@ -6,20 +6,19 @@ import { motion } from "framer-motion"
 import { ShieldCheck, RefreshCw, ArrowRight } from "lucide-react"
 import { usercontext } from "../../context/DataContext"
 
-
 const RESEND_TIME = 60 // seconds
 
 const maskEmail = (email = "") => {
-    const [name, domain] = email.split("@")
-    if (!name || !domain) return email
-    return `${name.slice(0, 2)}***@${domain}`
+  const [name, domain] = email.split("@")
+  if (!name || !domain) return email
+  return `${name.slice(0, 2)}***@${domain}`
 }
 
 const VerifyFacebookEmail = () => {
-    const [params] = useSearchParams()
-    const facebookId = params.get("fid")
-    const email = params.get("email")
-    const { checkAuth } = useContext(usercontext)
+  const [params] = useSearchParams()
+  const facebookId = params.get("fid")
+  const email = params.get("email")
+  const { checkAuth } = useContext(usercontext)
 
   const [otp, setOtp] = useState("")
   const [loading, setLoading] = useState(false)
@@ -47,7 +46,7 @@ const VerifyFacebookEmail = () => {
       setLoading(true)
       await apiInstance.post("/auth/verify-email", {
         facebookId,
-        otp
+        otp,
       })
 
       await checkAuth() // 🔥 sync frontend state with backend cookie
@@ -64,7 +63,7 @@ const VerifyFacebookEmail = () => {
     try {
       await apiInstance.post("/auth/add-email", {
         email,
-        facebookId
+        facebookId,
       })
       toast.success("New OTP sent to email")
       setResendTimer(RESEND_TIME)
@@ -84,17 +83,14 @@ const VerifyFacebookEmail = () => {
         {/* Header */}
         <div className="flex flex-col items-center mb-6">
           <div className="bg-green-100 p-4 rounded-full mb-3">
-            <ShieldCheck className="text-green-600" size={32} />
+            <ShieldCheck
+              className="text-green-600"
+              size={32}
+            />
           </div>
-          <h2 className="text-2xl font-bold text-gray-800">
-            Verify Your Email
-          </h2>
-          <p className="text-sm text-gray-500 text-center mt-1">
-            Enter the 6-digit code sent to
-          </p>
-          <p className="text-sm font-semibold text-gray-700 mt-1">
-            {maskEmail(email)}
-          </p>
+          <h2 className="text-2xl font-bold text-gray-800">Verify Your Email</h2>
+          <p className="text-sm text-gray-500 text-center mt-1">Enter the 6-digit code sent to</p>
+          <p className="text-sm font-semibold text-gray-700 mt-1">{maskEmail(email)}</p>
         </div>
 
         {/* OTP Input */}
@@ -122,8 +118,7 @@ const VerifyFacebookEmail = () => {
         <div className="text-center mt-4">
           {resendTimer > 0 ? (
             <p className="text-xs text-gray-500">
-              Resend OTP in{" "}
-              <span className="font-semibold">{resendTimer}s</span>
+              Resend OTP in <span className="font-semibold">{resendTimer}s</span>
             </p>
           ) : (
             <button
@@ -138,8 +133,7 @@ const VerifyFacebookEmail = () => {
 
         {/* Footer */}
         <p className="text-xs text-gray-400 text-center mt-4">
-          Didn’t receive the email? Check your spam folder or try resending the
-          code.
+          Didn’t receive the email? Check your spam folder or try resending the code.
         </p>
       </motion.div>
     </div>
