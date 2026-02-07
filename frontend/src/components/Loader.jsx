@@ -1,53 +1,20 @@
-import React from "react";
+import React from "react"
 
-const Loader = ({
-  size = 50,
-  text = "Loading...",
-  fullscreen = false,
-}) => {
+const Loader = ({ text = "Fetching Orders..." }) => {
   return (
-    <div
-      style={{
-        position: fullscreen ? "fixed" : "relative",
-        top: 0,
-        left: 0,
-        width: fullscreen ? "100vw" : "100%",
-        height: fullscreen ? "100vh" : "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: fullscreen ? "rgba(255,255,255,0.7)" : "transparent",
-        zIndex: 9999,
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          width: size,
-          height: size,
-          border: "5px solid #e5e7eb",
-          borderTop: "5px solid #2563eb",
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite",
-        }}
-      />
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black/20 backdrop-blur-sm z-50">
+      
+      {/* Animated Ring */}
+      <div className="relative w-16 h-16">
+        <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"></div>
+        <div className="absolute inset-2 rounded-full border-4 border-indigo-400 border-b-transparent animate-spin [animation-direction:reverse]"></div>
+      </div>
 
-      {text && (
-        <p style={{ marginTop: 15, fontSize: 14, color: "#374151" }}>
-          {text}
-        </p>
-      )}
-
-      <style>
-        {`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}
-      </style>
+      <p className="mt-6 text-white font-semibold tracking-wide text-sm">
+        {text}
+      </p>
     </div>
-  );
-};
+  )
+}
 
-export default Loader;
+export default Loader

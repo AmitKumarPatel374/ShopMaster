@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import apiInstance from "../../config/apiInstance"
 import { MapPin, Truck, CheckCircle, IndianRupee, Clock } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import Loader from "../../components/Loader"
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([])
@@ -45,18 +46,15 @@ const AdminOrders = () => {
     }
   }
 
+   if (loading) {
+    return <Loader fullscreen text="Fetching Orders..." />
+  }
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">📦 Seller Orders</h1>
 
-      {/* LOADING SKELETON */}
-      {loading && (
-        <div className="animate-pulse space-y-4">
-          <div className="h-40 bg-gray-300 rounded-xl"></div>
-          <div className="h-40 bg-gray-300 rounded-xl"></div>
-          <div className="h-40 bg-gray-300 rounded-xl"></div>
-        </div>
-      )}
+      
 
       {/* IF NO ORDERS */}
       {!loading && orders.length === 0 && (
