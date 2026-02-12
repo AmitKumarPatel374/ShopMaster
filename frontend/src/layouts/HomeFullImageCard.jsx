@@ -21,29 +21,80 @@ const HomeFullImageCard = ({ category }) => {
   }, [category])
 
   return (
-    <div
-      onClick={() => navigate(`/product/${category}/${randomProduct.subCategory}/${randomProduct.item}`)}
-      className="
-        p-4 mt-5 rounded-lg shadow-sm bg-gray-300 
-        w-full 
-        sm:w-[100%]  
-        md:w-[100%]  
-        lg:w-[49%] 
-        xl:w-[30%]
-      "
-    >
-      {randomProduct && (
-        <div >
-          <img
-            src={randomProduct.images[0]}
-            alt={randomProduct.title}
-            className="w-full h-160 object-cover rounded-md"
-          />
-         
-        </div>
-      )}
-    </div>
-  )
+  <div
+    onClick={() =>
+      randomProduct &&
+      navigate(
+        `/product/${category}/${randomProduct.subCategory}/${randomProduct.item}`
+      )
+    }
+    className="
+      p-3 sm:p-4 mt-5 
+      rounded-xl shadow-md bg-gray-200 
+      w-full
+      sm:w-full
+      md:w-full
+      lg:w-[48%]
+      xl:w-[31%]
+      cursor-pointer
+      transition hover:shadow-lg
+    "
+  >
+    {randomProduct && (
+      <div className="overflow-hidden rounded-lg">
+        <img
+          src={randomProduct.images[0]}
+          alt={randomProduct.title}
+          className="
+            w-full 
+            h-56 sm:h-72 md:h-80 lg:h-96 
+            object-cover 
+            rounded-lg 
+            transition duration-300 hover:scale-105
+          "
+        />
+      </div>
+    )}
+  </div>
+)
+return (
+  <div
+    onClick={() =>
+      randomProduct &&
+      navigate(
+        `/product/${category}/${randomProduct.subCategory}/${randomProduct.item}`
+      )
+    }
+    className="
+      p-3 sm:p-4 mt-5 
+      rounded-xl shadow-md bg-gray-200 
+      w-full
+      sm:w-full
+      md:w-full
+      lg:w-[48%]
+      xl:w-[31%]
+      cursor-pointer
+      transition hover:shadow-lg
+    "
+  >
+    {randomProduct && (
+      <div className="overflow-hidden rounded-lg">
+        <img
+          src={randomProduct.images[0]}
+          alt={randomProduct.title}
+          className="
+            w-full 
+            h-56 sm:h-72 md:h-80 lg:h-96 
+            object-cover 
+            rounded-lg 
+            transition duration-300 hover:scale-105
+          "
+        />
+      </div>
+    )}
+  </div>
+)
+
 }
 
 export default HomeFullImageCard

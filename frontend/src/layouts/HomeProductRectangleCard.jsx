@@ -87,37 +87,63 @@ const HomeProductRectangleCard = ({ category }) => {
   }
 
   return (
-    <div className="w-full h-[40vh] p-4 bg-gray-300 rounded-xl">
-      {/* ----- Header ----- */}
-      <div className="flex justify-between items-center mb-1">
-        <h1 className="text-xl font-semibold">{`${category} Top Deals`}</h1>
-      </div>
-
-      {/* Inject Arrow CSS */}
-      <style>{arrowStyles}</style>
-
-      <Slider {...sliderSettings}>
-        {products.slice(0, 10).map((product, i) => (
-          <div
-            key={i}
-            className="p-2"
-          >
-            <div
-              onClick={() => navigate(`/product/${category}/${product.subCategory}/${product.item}`)}
-              className="bg-white rounded-xl shadow-md p-3 flex flex-col items-center justify-center h-full"
-            >
-              <img
-                src={product.images[0]}
-                alt=""
-                className="w-full h-40 object-contain"
-              />
-              <h1 className="text-sm mt-2 text-center line-clamp-1">{product.title}</h1>
-            </div>
-          </div>
-        ))}
-      </Slider>
+  <div
+    className="
+      w-full 
+      min-h-[300px] sm:min-h-[350px] md:min-h-[380px] lg:min-h-[420px]
+      p-3 sm:p-4 md:p-6 
+      bg-gray-300 
+      rounded-xl
+    "
+  >
+    {/* ----- Header ----- */}
+    <div className="flex justify-between items-center mb-3 sm:mb-4">
+      <h1 className="text-base sm:text-lg md:text-xl font-semibold">
+        {`${category} Top Deals`}
+      </h1>
     </div>
-  )
+
+    {/* Inject Arrow CSS */}
+    <style>{arrowStyles}</style>
+
+    <Slider {...sliderSettings}>
+      {products.slice(0, 10).map((product, i) => (
+        <div key={i} className="px-1 sm:px-2">
+          <div
+            onClick={() =>
+              navigate(
+                `/product/${category}/${product.subCategory}/${product.item}`
+              )
+            }
+            className="
+              bg-white rounded-xl shadow-md 
+              p-3 
+              flex flex-col items-center justify-center 
+              h-full 
+              cursor-pointer 
+              transition hover:shadow-lg
+            "
+          >
+            <img
+              src={product.images[0]}
+              alt=""
+              className="
+                w-full 
+                h-32 sm:h-36 md:h-40 lg:h-44 
+                object-contain
+              "
+            />
+
+            <h1 className="text-xs sm:text-sm mt-2 text-center line-clamp-1">
+              {product.title}
+            </h1>
+          </div>
+        </div>
+      ))}
+    </Slider>
+  </div>
+)
+
 }
 
 export default HomeProductRectangleCard
