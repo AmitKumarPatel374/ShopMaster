@@ -12,9 +12,7 @@ const DataContext = (props) => {
   const [categories, setCategories] = useState([])
   const [totalAmount, setTotalAmount] = useState(0)
   const [currency, setCurrency] = useState("")
-  const [addressId, setAddressId] = useState(
-    localStorage.getItem("addressId") || null
-  )
+  const [addressId, setAddressId] = useState(localStorage.getItem("addressId") || null)
 
   // 🔥 EXPOSED AUTH CHECK FUNCTION
   const checkAuth = async () => {
@@ -23,21 +21,14 @@ const DataContext = (props) => {
       const response = await apiInstance.get("/auth/profile")
 
       if (response && response.data) {
-        console.log(
-          "✓ Authentication verified - User role:",
-          response.data.user.role
-        )
+        console.log("✓ Authentication verified - User role:", response.data.user.role)
         setToken(true)
         setRole(response.data.user.role)
         setUser_id(response.data.user._id)
       }
     } catch (error) {
       console.log("✗ Not authenticated or session expired")
-      console.log(
-        "Error details:",
-        error?.response?.status,
-        error?.response?.data?.message
-      )
+      console.log("Error details:", error?.response?.status, error?.response?.data?.message)
       setToken(false)
       setRole(null)
       setUser_id(null)
