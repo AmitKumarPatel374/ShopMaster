@@ -9,7 +9,7 @@ const ProductItems = () => {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const { category,subCategory, item } = useParams()
+  const { category, subCategory, item } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {

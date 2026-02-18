@@ -62,7 +62,9 @@ const CategoryBasedTopProduct = () => {
             return (
               discount >= 30 && (
                 <div
-                  onClick={() => navigate(`/product/${category}/${product.subCategory}/${product.item}`)}
+                  onClick={() =>
+                    navigate(`/product/${category}/${product.subCategory}/${product.item}`)
+                  }
                   key={index}
                   className="
                   border border-gray-300 rounded-xl p-4 bg-white 

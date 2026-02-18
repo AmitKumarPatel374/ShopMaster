@@ -8,15 +8,14 @@ const PaymentPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("")
   const { totalAmount, currency } = useContext(usercontext)
 
-    const {addressId, setAddressId} = useContext(usercontext);
-    const navigate = useNavigate();
-    
+  const { addressId, setAddressId } = useContext(usercontext)
+  const navigate = useNavigate()
+
   console.log(selectedMethod)
 
   const handleCOD = () => {
     toast.success("order placed successfully!")
     navigate("/orders")
-    
   }
 
   const amountToPay = localStorage.getItem("amountToPay")
@@ -67,7 +66,7 @@ const PaymentPage = () => {
   }
 
   const address = addressId || localStorage.getItem("addressId")
-  const options = { amountToPay, currencyToPay, selectedMethod,address }
+  const options = { amountToPay, currencyToPay, selectedMethod, address }
 
   const orderHandler = async () => {
     try {

@@ -140,13 +140,13 @@ const ViewProductDetail = () => {
     images,
   } = product
 
-  const deleteHandler = async(id)=>{
+  const deleteHandler = async (id) => {
     try {
-      const response = await apiInstance.delete(`/product/delete-product/${id}`);
-      toast.success(response.data.message);
+      const response = await apiInstance.delete(`/product/delete-product/${id}`)
+      toast.success(response.data.message)
       navigate(-1)
     } catch (error) {
-      console.log("error in deleting->",error);
+      console.log("error in deleting->", error)
     }
   }
 
@@ -170,7 +170,9 @@ const ViewProductDetail = () => {
           </span>
           <span
             className="cursor-pointer"
-            onClick={() => navigate(`/product/${product.category}/${product.subCategory}/${product.item}`)}
+            onClick={() =>
+              navigate(`/product/${product.category}/${product.subCategory}/${product.item}`)
+            }
           >
             {`${product.item}->`}
           </span>
@@ -273,7 +275,6 @@ const ViewProductDetail = () => {
                   >
                     🛒 Add to Cart
                   </button>
-
                 </>
               )}
 

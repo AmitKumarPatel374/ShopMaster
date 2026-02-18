@@ -21,7 +21,7 @@ const FilterByItems = () => {
       } finally {
         setLoading(false)
       }
-    } 
+    }
     fetchItems()
   }, [])
 
@@ -42,7 +42,7 @@ const FilterByItems = () => {
     )
   return (
     <div>
-        <NavbarFilter />
+      <NavbarFilter />
       <div className="flex justify-between text-gray-400 items-center mt-5 ml-5">
         <h3 className=" font-semibold">
           <span

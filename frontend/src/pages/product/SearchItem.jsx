@@ -8,9 +8,9 @@ const SearchItem = () => {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const {searchValue}=useParams();
+  const { searchValue } = useParams()
 
   useEffect(() => {
     const searchProducts = async () => {

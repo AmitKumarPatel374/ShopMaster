@@ -1,101 +1,99 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import apiInstance from "../../config/apiInstance";
-import { usercontext } from "../../context/DataContext";
+import React, { useState, useEffect, useContext } from "react"
+import { useParams, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import apiInstance from "../../config/apiInstance"
+import { usercontext } from "../../context/DataContext"
 
 const UpdateProduct = () => {
-  const { product_id } = useParams();
-  const navigate = useNavigate();
+  const { product_id } = useParams()
+  const navigate = useNavigate()
 
-  const [product, setProduct] = useState({});
-  const [images, setImages] = useState([]);
-  const [newFiles, setNewFiles] = useState([]);
-  const [newImageURL, setNewImageURL] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSub, setSelectedSub] = useState("");
-  const { categories } = useContext(usercontext);
+  const [product, setProduct] = useState({})
+  const [images, setImages] = useState([])
+  const [newFiles, setNewFiles] = useState([])
+  const [newImageURL, setNewImageURL] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("")
+  const [selectedSub, setSelectedSub] = useState("")
+  const { categories } = useContext(usercontext)
 
   // -------- FETCH PRODUCT --------
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data } = await apiInstance.get(
-          `/product/product-detail/${product_id}`
-        );
+        const { data } = await apiInstance.get(`/product/product-detail/${product_id}`)
 
-        const p = data.product;
+        const p = data.product
 
         setProduct({
           ...p,
           childCategory: p.item || "", // IMPORTANT FIX
-        });
+        })
 
-        setImages(p.images || []);
+        setImages(p.images || [])
 
-        if (p.category) setSelectedCategory(p.category);
-        if (p.subCategory) setSelectedSub(p.subCategory);
+        if (p.category) setSelectedCategory(p.category)
+        if (p.subCategory) setSelectedSub(p.subCategory)
       } catch (error) {
-        toast.error("Failed to load product details");
+        toast.error("Failed to load product details")
       }
-    };
+    }
 
-    fetchProduct();
-  }, [product_id]);
+    fetchProduct()
+  }, [product_id])
 
   // -------- INPUT CHANGE HANDLER --------
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
     if (name.includes("price")) {
-      const key = name.split(".")[1];
+      const key = name.split(".")[1]
       setProduct((prev) => ({
         ...prev,
         price: { ...prev.price, [key]: value },
-      }));
+      }))
     } else {
-      setProduct((prev) => ({ ...prev, [name]: value }));
+      setProduct((prev) => ({ ...prev, [name]: value }))
     }
-  };
+  }
 
   // -------- IMAGE FILE UPLOAD --------
   const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    setNewFiles((prev) => [...prev, ...files]);
-  };
+    const files = Array.from(e.target.files)
+    setNewFiles((prev) => [...prev, ...files])
+  }
 
   // -------- ADD IMAGE BY URL --------
   const handleAddImageURL = () => {
-    if (!newImageURL.trim()) return;
+    if (!newImageURL.trim()) return
 
-    setImages((prev) => [...prev, newImageURL.trim()]);
-    setNewImageURL("");
-    toast.success("Image added via URL");
-  };
+    setImages((prev) => [...prev, newImageURL.trim()])
+    setNewImageURL("")
+    toast.success("Image added via URL")
+  }
 
   // -------- DELETE EXISTING IMAGE --------
   const handleDeleteImage = (url) => {
-    setImages((prev) => prev.filter((img) => img !== url));
-  };
+    setImages((prev) => prev.filter((img) => img !== url))
+  }
 
   // -------- SUBMIT FORM --------
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const formData = new FormData();
+      const formData = new FormData()
 
-      formData.append("title", product.title);
-      formData.append("brand", product.brand);
-      formData.append("description", product.description);
-      formData.append("category", selectedCategory);
-      formData.append("subCategory", selectedSub);
-      formData.append("childCategory", product.childCategory); // FIXED
-      formData.append("color", product.color);
-      formData.append("size", product.size);
-      formData.append("warrenty", product.warrenty);
-      formData.append("specialOffer", product.specialOffer);
-      formData.append("specifications", product.specifications);
+      formData.append("title", product.title)
+      formData.append("brand", product.brand)
+      formData.append("description", product.description)
+      formData.append("category", selectedCategory)
+      formData.append("subCategory", selectedSub)
+      formData.append("childCategory", product.childCategory) // FIXED
+      formData.append("color", product.color)
+      formData.append("size", product.size)
+      formData.append("warrenty", product.warrenty)
+      formData.append("specialOffer", product.specialOffer)
+      formData.append("specifications", product.specifications)
 
       formData.append(
         "price",
@@ -104,46 +102,44 @@ const UpdateProduct = () => {
           amount: Number(product.price?.amount),
           currency: product.price?.currency || "INR",
         })
-      );
+      )
 
       // Add new files
-      newFiles.forEach((file) => formData.append("images", file));
+      newFiles.forEach((file) => formData.append("images", file))
 
       // Add existing images
-      formData.append("existingImages", JSON.stringify(images));
+      formData.append("existingImages", JSON.stringify(images))
 
-      const response = await apiInstance.put(
-        `/product/update-product/${product_id}`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const response = await apiInstance.put(`/product/update-product/${product_id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
 
-      toast.success(response.data.message || "Product updated successfully");
-      navigate(`/product/detail/${product_id}`);
+      toast.success(response.data.message || "Product updated successfully")
+      navigate(`/product/detail/${product_id}`)
     } catch (error) {
-      toast.error(error.response?.data?.message || "Update failed");
+      toast.error(error.response?.data?.message || "Update failed")
     }
-  };
+  }
 
   // -------- DELETE PRODUCT --------
   const handleDeleteProduct = async () => {
     try {
-      await apiInstance.delete(`/admin/delete-product/${product_id}`);
-      toast.success("Product deleted successfully");
-      navigate("/product/all");
+      await apiInstance.delete(`/admin/delete-product/${product_id}`)
+      toast.success("Product deleted successfully")
+      navigate("/product/all")
     } catch (error) {
-      toast.error("Failed to delete product");
+      toast.error("Failed to delete product")
     }
-  };
+  }
 
   // -------- CATEGORY HANDLING --------
   const subCategories = selectedCategory
     ? categories.find((cat) => cat.name === selectedCategory)?.sub || []
-    : [];
+    : []
 
   const childCategories = selectedSub
     ? subCategories.find((s) => s.title === selectedSub)?.items || []
-    : [];
+    : []
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-10 px-4 sm:px-6 lg:px-10 flex justify-center">
@@ -152,7 +148,10 @@ const UpdateProduct = () => {
           🛍️ Update Product
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-5"
+        >
           {/* TITLE */}
           <div>
             <label className="block font-medium mb-1">Title</label>
@@ -197,16 +196,23 @@ const UpdateProduct = () => {
             value={selectedCategory}
             className="w-full border px-3 py-2 rounded-md"
             onChange={(e) => {
-              setSelectedCategory(e.target.value);
-              setSelectedSub("");
-              setProduct({ ...product, childCategory: "" });
+              setSelectedCategory(e.target.value)
+              setSelectedSub("")
+              setProduct({ ...product, childCategory: "" })
             }}
           >
-            <option value="" disabled hidden>
+            <option
+              value=""
+              disabled
+              hidden
+            >
               Select Category
             </option>
             {categories.map((cat) => (
-              <option key={cat._id} value={cat.name}>
+              <option
+                key={cat._id}
+                value={cat.name}
+              >
                 {cat.name}
               </option>
             ))}
@@ -218,15 +224,22 @@ const UpdateProduct = () => {
             disabled={!selectedCategory}
             className="w-full border px-3 py-2 rounded-md"
             onChange={(e) => {
-              setSelectedSub(e.target.value);
-              setProduct({ ...product, childCategory: "" });
+              setSelectedSub(e.target.value)
+              setProduct({ ...product, childCategory: "" })
             }}
           >
-            <option value="" disabled hidden>
+            <option
+              value=""
+              disabled
+              hidden
+            >
               Select Subcategory
             </option>
             {subCategories.map((sub) => (
-              <option key={sub.title} value={sub.title}>
+              <option
+                key={sub.title}
+                value={sub.title}
+              >
                 {sub.title}
               </option>
             ))}
@@ -237,17 +250,22 @@ const UpdateProduct = () => {
             name="childCategory"
             value={product.childCategory || ""}
             disabled={!selectedSub}
-            onChange={(e) =>
-              setProduct({ ...product, childCategory: e.target.value })
-            }
+            onChange={(e) => setProduct({ ...product, childCategory: e.target.value })}
             className="w-full border px-3 py-2 rounded-md"
           >
-            <option value="" disabled hidden>
+            <option
+              value=""
+              disabled
+              hidden
+            >
               Select Child Category
             </option>
 
             {childCategories.map((item) => (
-              <option key={item} value={item}>
+              <option
+                key={item}
+                value={item}
+              >
                 {item}
               </option>
             ))}
@@ -356,7 +374,10 @@ const UpdateProduct = () => {
 
             <div className="flex flex-wrap gap-3 mb-3">
               {images.map((url, index) => (
-                <div key={index} className="relative">
+                <div
+                  key={index}
+                  className="relative"
+                >
                   <img
                     src={url}
                     alt=""
@@ -418,7 +439,7 @@ const UpdateProduct = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UpdateProduct;
+export default UpdateProduct

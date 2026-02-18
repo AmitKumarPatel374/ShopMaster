@@ -7,109 +7,72 @@ const APP_NAME = "ShopMaster"
 const FRONTEND_URL = "https://shopmaster.com"
 const SELLER_DASHBOARD_URL = "https://shopmaster.com/seller/dashboard"
 
-const LOGO_URL = "https://ik.imagekit.io/amit374/n23/myLogo.png?updatedAt=1762869433221"
-
-/**
- * Send welcome email based on user role
- * @param {Object} params
- * @param {string} params.email - User email
- * @param {string} params.name - User full name
- * @param {"user" | "seller"} params.role - User role
- */
 export async function sendWelcomeEmail({ email, name, role }) {
   try {
     const isSeller = role === "seller"
 
     const subject = isSeller
-      ? `Welcome to ${APP_NAME} Seller Center 🎉`
-      : `Welcome to ${APP_NAME} 🎉`
+      ? `Seller Account Activated – ${APP_NAME}`
+      : `Account Activated – ${APP_NAME}`
 
-    const heading = isSeller
-      ? "Welcome to the Seller Center"
-      : "Welcome to ShopMaster"
+    const dashboardLink = isSeller
+      ? SELLER_DASHBOARD_URL
+      : FRONTEND_URL
 
-    const bodyPrimary = isSeller
-      ? `Your seller account has been successfully verified and is now active.
-         You can start listing products, managing orders, and growing your store on ${APP_NAME}.`
-      : `Your email address has been successfully verified and your
-         ${APP_NAME} account is now active.`
-
-    const bodySecondary = isSeller
-      ? `Head to your dashboard to add your first product and customize your store.`
-      : `You can now browse products, place orders, and track your purchases
-         directly from your dashboard.`
-
-    const ctaText = isSeller ? "Go to Seller Dashboard" : "Go to ShopMaster"
-    const ctaLink = isSeller ? SELLER_DASHBOARD_URL : FRONTEND_URL
+    const accountTypeText = isSeller
+      ? "Your seller account has been successfully activated."
+      : "Your account has been successfully activated."
 
     const payload = {
       sender: {
         name: APP_NAME,
-        email: process.env.EMAIL,
+        email: process.env.EMAIL, // must be domain-based
       },
       to: [{ email, name: name || "User" }],
       subject,
 
+      // ✅ Minimal Transactional HTML
       htmlContent: `
-<div style="font-family: Inter, Arial, sans-serif; background:#ffffff; padding:40px;">
-  <div style="max-width:620px; margin:0 auto; color:#111827;">
+<div style="font-family: Arial, sans-serif; font-size:14px; color:#000; line-height:1.6;">
+  <p>Hello ${name || "User"},</p>
 
-    <!-- Brand -->
-    <div style="margin-bottom:24px;">
-      <img 
-        src="${LOGO_URL}" 
-        alt="${APP_NAME} Logo" 
-        style="width:64px; height:auto; margin-bottom:12px;" 
-      />
-      <p style="font-size:14px; color:#6b7280; margin:0;">
-        ${APP_NAME}
-      </p>
-    </div>
+  <p>
+    ${accountTypeText}
+  </p>
 
-    <!-- Heading -->
-    <h1 style="font-size:22px; font-weight:600; margin:0 0 20px;">
-      ${heading}
-    </h1>
+  <p>
+    Activated On: ${new Date().toUTCString()}
+  </p>
 
-    <!-- Body -->
-    <p style="font-size:15px; line-height:1.7; color:#374151; margin-bottom:24px;">
-      Hello ${name || "User"},<br/><br/>
-      ${bodyPrimary}
-    </p>
+  <p>
+    You can access your account here:
+  </p>
 
-    <p style="font-size:15px; line-height:1.7; color:#374151; margin-bottom:24px;">
-      ${bodySecondary}
-    </p>
+  <p>
+    ${dashboardLink}
+  </p>
 
-    <!-- CTA -->
-    <a href="${ctaLink}"
-       style="
-         display:inline-block;
-         margin-top:8px;
-         padding:12px 28px;
-         border:1.5px solid #111827;
-         color:#111827;
-         text-decoration:none;
-         font-size:14px;
-         font-weight:500;
-         border-radius:6px;
-       ">
-      ${ctaText}
-    </a>
+  <hr/>
 
-    <hr style="border:none; border-top:1px solid #e5e7eb; margin:40px 0;" />
-
-    <!-- Footer -->
-    <p style="font-size:13px; color:#6b7280; line-height:1.6;">
-      Best regards,<br/>
-      <strong style="color:#111827;">${APP_NAME} Team</strong><br/>
-      <span style="font-size:12px;">
-        Build smarter. Shop faster.
-      </span>
-    </p>
-
-  </div>
+  <p style="font-size:12px; color:#555;">
+    This is an automated account notification from ${APP_NAME}.
+    Please do not reply to this email.
+  </p>
 </div>
+      `,
+
+      // ✅ Plain Text Version (Important for Deliverability)
+      textContent: `
+Hello ${name || "User"},
+
+${accountTypeText}
+
+Activated On: ${new Date().toUTCString()}
+
+Access your account:
+${dashboardLink}
+
+This is an automated account notification.
       `,
     }
 
@@ -120,7 +83,11 @@ export async function sendWelcomeEmail({ email, name, role }) {
       },
     })
 
-    console.log(`${APP_NAME} WELCOME EMAIL SENT (${role}):`, response.data.messageId)
+    console.log(
+      `${APP_NAME} ACCOUNT ACTIVATION EMAIL SENT (${role}):`,
+      response.data.messageId
+    )
+
     return response.data
   } catch (error) {
     console.error(
