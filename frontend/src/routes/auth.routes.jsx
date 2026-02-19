@@ -1,3 +1,4 @@
+import PageNotFound from "../pages/common/PageNotFound"
 import AddEmail from "../pages/auth/AddEmail"
 import ForgotPassword from "../pages/auth/ForgotPassword"
 import LoginForm from "../pages/auth/LoginForm"
@@ -16,6 +17,8 @@ const AuthRoutes = () => {
       <Route path="verify-otp" element={<VerifyContact />} />
       <Route path="add-email" element={<AddEmail />} />
       <Route path="verify-email" element={<VerifyFacebookEmail />} />
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }

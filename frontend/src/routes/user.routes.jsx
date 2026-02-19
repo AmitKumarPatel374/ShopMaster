@@ -1,3 +1,4 @@
+import PageNotFound from "../pages/common/PageNotFound"
 import ViewUsers from "../pages/admin/ViewUsers"
 import GetUser from "../pages/user/GetUser"
 import Profile from "../pages/user/Profile"
@@ -12,6 +13,8 @@ const UserRoutes = () => {
       <Route path="update-profile" element={<UpdateProfile />} />
       <Route path="list" element={<ViewUsers />} />
       <Route path=":user_id" element={<GetUser />} />
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }

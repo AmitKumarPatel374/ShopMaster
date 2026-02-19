@@ -1,3 +1,4 @@
+import PageNotFound from "../pages/common/PageNotFound"
 import AdminOrders from "../pages/admin/AdminOrders"
 import ViewAdminProducts from "../pages/admin/ViewAdminProducts"
 import ViewUsers from "../pages/admin/ViewUsers"
@@ -24,6 +25,8 @@ const AdminRoutes = () => {
         path="orders/update/:order_id"
         element={<OrderUpdateForm />}
       />
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }

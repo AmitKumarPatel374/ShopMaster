@@ -1,3 +1,4 @@
+import PageNotFound from "../pages/common/PageNotFound"
 import AdminOrders from "../pages/admin/AdminOrders"
 import OrderPage from "../pages/order/OrderPage"
 import OrderUpdateForm from "../pages/order/OrderUpdateForm"
@@ -17,6 +18,8 @@ const OrderRoutes = () => {
         path="seller/update/:order_id"
         element={<OrderUpdateForm />}
       />
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }

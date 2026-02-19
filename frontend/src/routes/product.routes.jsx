@@ -1,3 +1,4 @@
+import PageNotFound from "../pages/common/PageNotFound"
 import ViewAdminProducts from "../pages/admin/ViewAdminProducts"
 import Cart from "../pages/order/Cart"
 import PaymentPage from "../pages/payment/PaymentPage"
@@ -34,6 +35,8 @@ const ProductRoutes = () => {
         path="filter/:category/:subCategory/:item"
         element={<FilterByItems />}
       />
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }
