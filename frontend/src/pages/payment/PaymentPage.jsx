@@ -6,35 +6,47 @@ import { useNavigate } from "react-router-dom"
 
 const PaymentPage = () => {
   const [selectedMethod, setSelectedMethod] = useState("")
-  const { totalAmount, currency } = useContext(usercontext)
-
-  const { addressId, setAddressId } = useContext(usercontext)
+  const { totalAmount, currency, addressId } = useContext(usercontext)
   const navigate = useNavigate()
 
-  console.log(selectedMethod)
+  const amountToPay = totalAmount || localStorage.getItem("amountToPay")
+  const currencyToPay =
+    currency || localStorage.getItem("currencyToPay") || "INR"
 
-  const handleCOD = () => {
-    toast.success("order placed successfully!")
+  const address = addressId || localStorage.getItem("addressId")
+
+  const orderHandler = async () => {
+    try {
+      await apiInstance.post("/order/create", {
+        amountToPay,
+        currencyToPay,
+        selectedMethod,
+        address,
+      })
+    } catch (error) {
+      console.log("order error:", error)
+    }
+  }
+
+  const handleCOD = async () => {
+    await orderHandler()
+    toast.success("Order placed successfully!")
     navigate("/orders")
   }
 
-  const amountToPay = localStorage.getItem("amountToPay")
-  const currencyToPay = localStorage.getItem("currencyToPay")
-
   const paymentHandler = async () => {
-    let details = {
-      amount: totalAmount || amountToPay,
-      currency: currency || currencyToPay || "INR",
-    }
+    try {
+      const res = await apiInstance.post("/payment/process", {
+        amount: amountToPay,
+        currency: currencyToPay,
+      })
 
-    const res = await apiInstance.post("/payment/process", details)
-    if (res) {
       const options = {
         key: import.meta.env.VITE_RAZORPAY_API_KEY,
         amount: res.data.orders.amount,
         currency: res.data.orders.currency,
         name: "ShopMaster",
-        description: "test transaction",
+        description: "Order Payment",
         order_id: res.data.orders.id,
         handler: async function (response) {
           const verifyRes = await apiInstance.post("/payment/verify", {
@@ -42,114 +54,133 @@ const PaymentPage = () => {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           })
+
           if (verifyRes.data.payment?.status === "paid") {
-            toast.success("Payment Success!")
-            navigate("/orders")
-            // ---- IMPORTANT ----
-            // Now create order here
             await orderHandler()
+            toast.success("Payment Successful!")
+            navigate("/orders")
           } else {
-            toast.error("Payment Failed!")
+            toast.error("Payment verification failed.")
           }
         },
-        prefill: {
-          name: "Amit Kumar Patel",
-          email: "amit@example.com",
-          contact: "9999999999",
-        },
-        theme: { color: "blue" },
+        theme: { color: "#2563eb" },
       }
 
-      const razorpayScreen = new window.Razorpay(options)
-      razorpayScreen.open()
-    }
-  }
-
-  const address = addressId || localStorage.getItem("addressId")
-  const options = { amountToPay, currencyToPay, selectedMethod, address }
-
-  const orderHandler = async () => {
-    try {
-      const response = await apiInstance.post("/order/create", options)
-      console.log(response)
+      new window.Razorpay(options).open()
     } catch (error) {
-      console.log("error in orderHandler->", error)
+      toast.error("Payment failed. Try again.")
     }
   }
 
   return (
-    <div className=" bg-gray-100 flex justify-center p-4 md:p-10">
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg border border-gray-200 p-6 md:p-8">
-        {/* HEADER */}
-        <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Payment Options</h1>
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center px-4 py-10">
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl border p-8">
 
-        {/* OPTION: CASH ON DELIVERY */}
+        {/* HEADER */}
+        <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          Complete Your Payment
+        </h1>
+
+        {/* ORDER SUMMARY */}
+        <div className="bg-gray-50 rounded-xl p-5 mb-6 border">
+          <h2 className="font-semibold text-gray-800 mb-4">
+            Order Summary
+          </h2>
+
+          <div className="flex justify-between text-gray-600 mb-2">
+            <span>Subtotal</span>
+            <span>{currencyToPay} {amountToPay}</span>
+          </div>
+
+          <div className="flex justify-between text-gray-600 mb-2">
+            <span>Shipping</span>
+            <span>Free</span>
+          </div>
+
+          <hr className="my-3" />
+
+          <div className="flex justify-between font-bold text-lg text-gray-900">
+            <span>Total</span>
+            <span>{currencyToPay} {amountToPay}</span>
+          </div>
+        </div>
+
+        {/* PAYMENT OPTIONS */}
+        <h2 className="font-semibold text-gray-800 mb-4">
+          Select Payment Method
+        </h2>
+
+        {/* COD */}
         <div
-          className={`p-5 rounded-xl border mb-5 cursor-pointer transition-colors 
-          ${
+          onClick={() => setSelectedMethod("COD")}
+          className={`p-4 mb-4 rounded-xl border cursor-pointer transition ${
             selectedMethod === "COD"
               ? "border-blue-600 bg-blue-50"
-              : "border-gray-300 bg-gray-50 hover:bg-gray-100"
+              : "border-gray-300 hover:border-blue-400"
           }`}
-          onClick={() => setSelectedMethod("COD")}
         >
-          <div className="flex gap-4 items-start">
+          <div className="flex items-start gap-3">
             <input
               type="radio"
               checked={selectedMethod === "COD"}
               onChange={() => setSelectedMethod("COD")}
-              name="payment"
-              className="mt-1 h-5 w-5"
+              className="mt-1"
             />
             <div>
-              <p className="font-semibold text-lg text-gray-800">Cash on Delivery</p>
-              <p className="text-gray-600 text-sm">Pay with cash when your order is delivered.</p>
+              <p className="font-medium">Cash on Delivery</p>
+              <p className="text-sm text-gray-600">
+                Pay when your order is delivered.
+              </p>
             </div>
           </div>
         </div>
 
-        {/* OPTION: ONLINE PAYMENT */}
+        {/* ONLINE */}
         <div
-          className={`p-5 rounded-xl border mb-6 cursor-pointer transition-colors 
-          ${
+          onClick={() => setSelectedMethod("ONLINE")}
+          className={`p-4 rounded-xl border cursor-pointer transition ${
             selectedMethod === "ONLINE"
               ? "border-blue-600 bg-blue-50"
-              : "border-gray-300 bg-gray-50 hover:bg-gray-100"
+              : "border-gray-300 hover:border-blue-400"
           }`}
-          onClick={() => setSelectedMethod("ONLINE")}
         >
-          <div className="flex gap-4 items-start">
+          <div className="flex items-start gap-3">
             <input
               type="radio"
               checked={selectedMethod === "ONLINE"}
               onChange={() => setSelectedMethod("ONLINE")}
-              name="payment"
-              className="mt-1 h-5 w-5"
+              className="mt-1"
             />
             <div>
-              <p className="font-semibold text-lg text-gray-800">Online Payment</p>
-              <p className="text-gray-600 text-sm">Pay using UPI, Cards, Netbanking or Wallets.</p>
+              <p className="font-medium">Online Payment</p>
+              <p className="text-sm text-gray-600">
+                UPI, Cards, Net Banking & Wallets.
+              </p>
             </div>
           </div>
         </div>
 
         {/* BUTTON */}
         <button
+          disabled={!selectedMethod}
           onClick={() => {
-            if (selectedMethod === "COD") {
-              handleCOD()
-              orderHandler()
-            } else if (selectedMethod === "ONLINE") {
-              paymentHandler()
-              // orderHandler()
-            } else {
-              toast.error("select a payment method!")
-            }
+            if (selectedMethod === "COD") handleCOD()
+            else if (selectedMethod === "ONLINE") paymentHandler()
           }}
-          className="w-full bg-blue-600 text-white py-3 rounded-xl text-lg font-semibold shadow-md hover:bg-blue-700 transition"
+          className={`w-full mt-6 py-3 rounded-xl text-lg font-semibold transition ${
+            selectedMethod
+              ? "bg-blue-600 hover:bg-blue-700 text-white"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
         >
-          Pay Now
+          {selectedMethod === "ONLINE"
+            ? `Pay ${currencyToPay} ${amountToPay}`
+            : "Place Order"}
         </button>
+
+        <p className="text-xs text-gray-500 mt-6 text-center">
+          Secure payments powered by Razorpay.
+        </p>
       </div>
     </div>
   )
