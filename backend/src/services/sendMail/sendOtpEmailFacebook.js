@@ -4,16 +4,18 @@ const BREVO_API_KEY = process.env.BREVO_API_KEY
 const BREVO_URL = "https://api.brevo.com/v3/smtp/email"
 
 const APP_NAME = "ShopMaster"
-const FRONTEND_URL = process.env.CLIENT_ORIGIN 
-const LOGO_URL =
-  "https://ik.imagekit.io/amit374/n23/myLogo.png?updatedAt=1762869433221"
 
-export async function sendOtpEmailFacebook({ email, name, otp, purpose = "Verify Email" }) {
+export async function sendOtpEmailFacebook({
+  email,
+  name,
+  otp,
+  purpose = "Email Verification",
+}) {
   try {
     const payload = {
       sender: {
         name: APP_NAME,
-        email: process.env.EMAIL, // verified sender in Brevo
+        email: process.env.EMAIL, // must be domain-based
       },
       to: [
         {
@@ -21,88 +23,55 @@ export async function sendOtpEmailFacebook({ email, name, otp, purpose = "Verify
           name: name || "User",
         },
       ],
-      subject: `${APP_NAME} | Your OTP Code`,
+      subject: `Security Code – ${APP_NAME}`,
+
+      // ✅ Minimal Transactional HTML
       htmlContent: `
-<div style="font-family: Inter, Arial, sans-serif; background:#ffffff; padding:40px;">
-  <div style="max-width:600px; margin:0 auto; color:#111827;">
+<div style="font-family: Arial, sans-serif; font-size:14px; color:#000; line-height:1.6;">
+  <p>Hello ${name || "User"},</p>
 
-    <!-- Brand -->
-    <div style="margin-bottom:24px;">
-      <img 
-        src="${LOGO_URL}" 
-        alt="${APP_NAME} Logo" 
-        style="width:64px; height:64px; border-radius:50%; margin-bottom:12px;" 
-      />
-      <p style="font-size:14px; color:#6b7280; margin:0;">
-        ${APP_NAME} Security
-      </p>
-    </div>
+  <p>
+    Your one-time security code is provided below.
+    This code is valid for 10 minutes.
+  </p>
 
-    <!-- Heading -->
-    <h1 style="font-size:22px; font-weight:600; margin:0 0 20px;">
-      ${purpose}
-    </h1>
+  <p style="font-size:24px; font-weight:bold; letter-spacing:4px;">
+    ${otp}
+  </p>
 
-    <!-- Body -->
-    <p style="font-size:15px; line-height:1.7; color:#374151; margin-bottom:24px;">
-      Hello ${name || "User"},<br/><br/>
-      Use the OTP below to continue. This code is valid for <strong>10 minutes</strong>.
-    </p>
+  <p>
+    Purpose: ${purpose}<br/>
+    Generated On: ${new Date().toUTCString()}
+  </p>
 
-    <!-- OTP Box -->
-    <div style="
-      border-left:4px solid #111827;
-      padding:18px 24px;
-      margin-bottom:32px;
-      background:#f9fafb;
-    ">
-      <p style="margin:0; font-size:13px; color:#6b7280;">
-        Your One-Time Password
-      </p>
-      <p style="
-        margin:8px 0 0;
-        font-size:28px;
-        font-weight:700;
-        letter-spacing:6px;
-        color:#111827;
-      ">
-        ${otp}
-      </p>
-    </div>
+  <p>
+    If you did not request this code, please ignore this email.
+  </p>
 
-    <p style="font-size:14px; color:#374151; line-height:1.6;">
-      If you didn’t request this, you can safely ignore this email.
-    </p>
+  <hr/>
 
-    <!-- CTA -->
-    <a href="${FRONTEND_URL}"
-       style="
-         display:inline-block;
-         margin-top:24px;
-         padding:12px 28px;
-         border:1.5px solid #111827;
-         color:#111827;
-         text-decoration:none;
-         font-size:14px;
-         font-weight:500;
-         border-radius:6px;
-       ">
-      Go to ${APP_NAME}
-    </a>
-
-    <hr style="border:none; border-top:1px solid #e5e7eb; margin:40px 0;" />
-
-    <!-- Footer -->
-    <p style="font-size:13px; color:#6b7280; line-height:1.6;">
-      Best regards,<br/>
-      <strong style="color:#111827;">${APP_NAME} Team</strong><br/>
-      <span style="font-size:12px;">
-        This is an automated security email. Please do not reply.
-      </span>
-    </p>
-
-  </div>
+  <p style="font-size:12px; color:#555;">
+    This is an automated security message.
+    Please do not reply to this email.
+  </p>
 </div>
+      `,
+
+      // ✅ Plain Text Version (Important for deliverability)
+      textContent: `
+Hello ${name || "User"},
+
+Your one-time security code is:
+
+${otp}
+
+This code is valid for 10 minutes.
+Purpose: ${purpose}
+Generated On: ${new Date().toUTCString()}
+
+If you did not request this code, you may ignore this email.
+
+This is an automated security message.
       `,
     }
 
