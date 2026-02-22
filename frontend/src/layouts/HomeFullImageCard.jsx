@@ -21,14 +21,12 @@ const HomeFullImageCard = ({ category }) => {
   }, [category])
 
   return (
-  <div
-    onClick={() =>
-      randomProduct &&
-      navigate(
-        `/product/${category}/${randomProduct.subCategory}/${randomProduct.item}`
-      )
-    }
-    className="
+    <div
+      onClick={() =>
+        randomProduct &&
+        navigate(`/product/${category}/${randomProduct.subCategory}/${randomProduct.item}`)
+      }
+      className="
       p-3 sm:p-4 mt-5 
       rounded-xl shadow-md bg-gray-200 
       w-full
@@ -39,33 +37,31 @@ const HomeFullImageCard = ({ category }) => {
       cursor-pointer
       transition hover:shadow-lg
     "
-  >
-    {randomProduct && (
-      <div className="overflow-hidden rounded-lg">
-        <img
-          src={randomProduct.images[0]}
-          alt={randomProduct.title}
-          className="
+    >
+      {randomProduct && (
+        <div className="overflow-hidden rounded-lg">
+          <img
+            src={randomProduct.images[0]}
+            alt={randomProduct.title}
+            className="
             w-full 
             h-56 sm:h-72 md:h-80 lg:h-96 
             object-cover 
             rounded-lg 
             transition duration-300 hover:scale-105
           "
-        />
-      </div>
-    )}
-  </div>
-)
-return (
-  <div
-    onClick={() =>
-      randomProduct &&
-      navigate(
-        `/product/${category}/${randomProduct.subCategory}/${randomProduct.item}`
-      )
-    }
-    className="
+          />
+        </div>
+      )}
+    </div>
+  )
+  return (
+    <div
+      onClick={() =>
+        randomProduct &&
+        navigate(`/product/${category}/${randomProduct.subCategory}/${randomProduct.item}`)
+      }
+      className="
       p-3 sm:p-4 mt-5 
       rounded-xl shadow-md bg-gray-200 
       w-full
@@ -76,25 +72,24 @@ return (
       cursor-pointer
       transition hover:shadow-lg
     "
-  >
-    {randomProduct && (
-      <div className="overflow-hidden rounded-lg">
-        <img
-          src={randomProduct.images[0]}
-          alt={randomProduct.title}
-          className="
+    >
+      {randomProduct && (
+        <div className="overflow-hidden rounded-lg">
+          <img
+            src={randomProduct.images[0]}
+            alt={randomProduct.title}
+            className="
             w-full 
             h-56 sm:h-72 md:h-80 lg:h-96 
             object-cover 
             rounded-lg 
             transition duration-300 hover:scale-105
           "
-        />
-      </div>
-    )}
-  </div>
-)
-
+          />
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default HomeFullImageCard

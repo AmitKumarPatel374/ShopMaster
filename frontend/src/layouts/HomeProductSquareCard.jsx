@@ -16,8 +16,8 @@ const HomeProductSquareCard = ({ category }) => {
   }, [])
 
   return (
-  <div
-    className="
+    <div
+      className="
       p-3 sm:p-4 md:p-5 
       mt-5 
       rounded-xl shadow-md 
@@ -28,39 +28,33 @@ const HomeProductSquareCard = ({ category }) => {
       lg:w-[48%]
       xl:w-[31%]
     "
-  >
-    {/* ----- Header ----- */}
-    <div className="flex justify-between items-center mb-4">
-      <h1 className="text-base sm:text-lg md:text-xl font-semibold">
-        {`${category} Top Deals`}
-      </h1>
+    >
+      {/* ----- Header ----- */}
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-base sm:text-lg md:text-xl font-semibold">{`${category} Top Deals`}</h1>
 
-      <button
-        onClick={() => navigate(`/product/${category}`)}
-        className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition"
-      >
-        <ArrowRight size={18} />
-      </button>
-    </div>
+        <button
+          onClick={() => navigate(`/product/${category}`)}
+          className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition"
+        >
+          <ArrowRight size={18} />
+        </button>
+      </div>
 
-    {/* ----- Grid ----- */}
-    <div
-      className="
+      {/* ----- Grid ----- */}
+      <div
+        className="
         grid
         grid-cols-1
         sm:grid-cols-2
         gap-3 sm:gap-4
       "
-    >
-      {products.slice(0, 4).map((product, index) => (
-        <div
-          onClick={() =>
-            navigate(
-              `/product/${category}/${product.subCategory}/${product.item}`
-            )
-          }
-          key={index}
-          className="
+      >
+        {products.slice(0, 4).map((product, index) => (
+          <div
+            onClick={() => navigate(`/product/${category}/${product.subCategory}/${product.item}`)}
+            key={index}
+            className="
             border border-gray-300 rounded-xl 
             p-3 sm:p-4 
             bg-white 
@@ -68,30 +62,27 @@ const HomeProductSquareCard = ({ category }) => {
             hover:shadow-md transition
             cursor-pointer
           "
-        >
-          <img
-            src={product.images[0]}
-            alt={product.title}
-            className="
+          >
+            <img
+              src={product.images[0]}
+              alt={product.title}
+              className="
               w-full 
               h-32 sm:h-36 md:h-40 
               object-contain
             "
-          />
+            />
 
-          <h1 className="text-xs sm:text-sm font-semibold mt-2 text-center line-clamp-2">
-            {product.title}
-          </h1>
+            <h1 className="text-xs sm:text-sm font-semibold mt-2 text-center line-clamp-2">
+              {product.title}
+            </h1>
 
-          <p className="text-green-600 text-xs sm:text-sm mt-1 font-medium">
-            Min. 30% Off
-          </p>
-        </div>
-      ))}
+            <p className="text-green-600 text-xs sm:text-sm mt-1 font-medium">Min. 30% Off</p>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-)
-
+  )
 }
 
 export default HomeProductSquareCard

@@ -51,8 +51,8 @@ const AddressFormLayout = ({ setIsAdd, onSuccess }) => {
       const res = await apiInstance.post("/address/add", formData)
       toast.success("Address Added Successfully!")
       // 🔥 THESE TWO LINES FIX YOUR PROBLEM
-    onSuccess()      // refresh address list in GetDeliveryAddress
-    setIsAdd(false) // close the form
+      onSuccess() // refresh address list in GetDeliveryAddress
+      setIsAdd(false) // close the form
       console.log(res.data)
     } catch (error) {
       toast.error("Error adding address")

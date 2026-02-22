@@ -9,15 +9,15 @@ export const RegisterUserHook = () => {
   return useMutation({
     mutationFn: RegisterUserApi,
     onSuccess: (data) => {
-      console.log("✅ Mutation success:", data);
-      toast.success("Registration successful!");
+      console.log("✅ Mutation success:", data)
+      toast.success("Registration successful!")
 
       // optional delay to let toast appear
-      setTimeout(() => navigate("/auth/login"), 1500);
+      setTimeout(() => navigate("/auth/login"), 1500)
     },
-    onError:(error)=>{
-      toast.error("Registration failed.");
-    }
+    onError: (error) => {
+      toast.error("Registration failed.")
+    },
   })
 }
 export const loginUserHook = () => {
@@ -26,14 +26,14 @@ export const loginUserHook = () => {
   return useMutation({
     mutationFn: loginUserApi,
     onSuccess: (data) => {
-      console.log("✅ Mutation success:", data);
-      toast.success("login successful!");
+      console.log("✅ Mutation success:", data)
+      toast.success("login successful!")
 
       // optional delay to let toast appear
-      setTimeout(() => navigate("/"), 1500);
+      setTimeout(() => navigate("/"), 1500)
     },
-    onError:(error)=>{
-      toast.error("login failed.");
-    }
+    onError: (error) => {
+      toast.error("login failed.")
+    },
   })
 }
