@@ -8,7 +8,7 @@ It delivers a modern online shopping experience with secure authentication, opti
 ## 🚀 Live Demo
 
 🌐 Frontend: https://sasta-flipcart.vercel.app/  
-🔗 Backend API: (Add deployed backend link if available)
+🔗 Backend API: https://sasta-flipcart.onrender.com
 
 ---
 
