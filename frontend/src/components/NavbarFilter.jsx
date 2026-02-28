@@ -62,13 +62,9 @@ const NavbarFilter = () => {
                           {sub.items.map((item, j) => (
                             <li
                               // onClick={()=>console.log(cat.name,sub.title,item)}
-                              onClick={() => {
-                                if (item === "All") {
-                                  navigate(`/product/filter/${cat.name}/${sub.title}`)
-                                } else {
-                                  navigate(`/product/filter/${cat.name}/${sub.title}/${item}`)
-                                }
-                              }}
+                              onClick={() =>
+                                navigate(`/product/filter/${cat.name}/${sub.title}/${item}`)
+                              }
                               key={j}
                               className="text-gray-600 text-sm hover:text-blue-500"
                             >
@@ -107,8 +103,14 @@ const NavbarFilter = () => {
                 <ul className="text-sm space-y-1">
                   {sub.items.map((item, j) => (
                     <li
-                      className="hover:text-blue-500"
                       key={j}
+                      onClick={() => {
+                        navigate(
+                          `/product/filter/${categories[mobileMenu].name}/${sub.title}/${item}`
+                        )
+                        setMobileMenu(null)
+                      }}
+                      className="hover:text-blue-500 cursor-pointer"
                     >
                       {item}
                     </li>
