@@ -164,7 +164,7 @@ npm run dev
 Create `.env` file:
 
 ```
-VITE_API_BASE_URL=http://localhost:5000/api
+VITE_API_BASE_URL=http://localhost:3000/api
 ```
 
 ---
@@ -172,7 +172,7 @@ VITE_API_BASE_URL=http://localhost:5000/api
 # 📡 API Base URL
 
 ```
-http://localhost:5000/api
+http://localhost:3000/api
 ```
 
 ---
