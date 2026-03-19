@@ -5,12 +5,7 @@ const BREVO_URL = "https://api.brevo.com/v3/smtp/email"
 
 const APP_NAME = "ShopMaster"
 
-export async function sendVerifyEmailOtp({
-  email,
-  username,
-  otp,
-  otpExpiry,
-}) {
+export async function sendVerifyEmailOtp({ email, username, otp, otpExpiry }) {
   try {
     const expiryMinutes = Math.max(
       1,
@@ -83,10 +78,7 @@ This is an automated security message.
     console.log(`${APP_NAME} VERIFY EMAIL OTP SENT:`, response.data.messageId)
     return response.data
   } catch (error) {
-    console.error(
-      `${APP_NAME} Verify email OTP failed:`,
-      error.response?.data || error.message
-    )
+    console.error(`${APP_NAME} Verify email OTP failed:`, error.response?.data || error.message)
     throw error
   }
 }
