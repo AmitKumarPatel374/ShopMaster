@@ -15,6 +15,7 @@ const FilterByItems = () => {
     const fetchItems = async () => {
       try {
         const response = await apiInstance.get(`/product/filter/${category}/${subCategory}/${item}`)
+        
         setItems(response.data.items)
       } catch (err) {
         setError(err.message)

@@ -13,10 +13,13 @@ const DataContext = (props) => {
   const [totalAmount, setTotalAmount] = useState(0)
   const [currency, setCurrency] = useState("")
   const [addressId, setAddressId] = useState(localStorage.getItem("addressId") || null)
+  const [authLoading,setAuthLoading]=useState(true);
 
   // 🔥 EXPOSED AUTH CHECK FUNCTION
   const checkAuth = async () => {
     try {
+
+      setAuthLoading(true)
       console.log("Checking authentication status...")
       const response = await apiInstance.get("/auth/profile")
 
@@ -32,6 +35,8 @@ const DataContext = (props) => {
       setToken(false)
       setRole(null)
       setUser_id(null)
+    } finally {
+      setAuthLoading(false)
     }
   }
 
@@ -61,6 +66,7 @@ const DataContext = (props) => {
         setRole,
         user_id,
         setUser_id,
+        authLoading,
         contact,
         setContact,
         categories,
