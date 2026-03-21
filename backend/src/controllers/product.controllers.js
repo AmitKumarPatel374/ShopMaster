@@ -65,8 +65,17 @@ const getProductByCategoryController = async (req, res) => {
 
 const getProductByItemCategoryController = async (req, res) => {
   try {
+    console.log(req.user);
     const item = req.params.item
-    let products = await productModel.find({ item: item })
+
+    const filter ={
+      item:item,
+    }
+
+    if (req.user.role == "seller") {
+      filter.createdBy = req.user._id;
+    }
+    let products = await productModel.find(filter)
 
     if (!products) {
       return res.status(400).json({

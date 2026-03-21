@@ -16,7 +16,7 @@ router.put("/cart/update", authMiddleware, updateCartQuantity);
 router.delete("/cart/delete/:id",authMiddleware, deleteCartItem);
 router.get("/:category",getProductByCategoryController);
 router.get("/:category/:subCategory/:item",getProductByItemCategoryController);
-router.get("/filter/:category/:subCategory/:item",getProductByItemCategoryController);
+router.get("/filter/:category/:subCategory/:item",authMiddleware,getProductByItemCategoryController);
 
 
 router.put("/update-product/:product_id",authMiddleware, uploads.array("images", 5), updateProductController);
