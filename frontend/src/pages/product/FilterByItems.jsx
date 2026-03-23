@@ -1,8 +1,9 @@
 import NavbarFilter from "../../components/NavbarFilter"
 import ItemPageComponent from "../../components/ItemPageComponent"
 import apiInstance from "../../config/apiInstance"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { usercontext } from "../../context/DataContext"
 
 const FilterByItems = () => {
   const [items, setItems] = useState([])
@@ -11,11 +12,19 @@ const FilterByItems = () => {
   const { category, subCategory, item } = useParams()
   const navigate = useNavigate()
 
+  const {authLoading} = useContext(usercontext);
+  const {user_id} = useContext(usercontext);
+  const {role} = useContext(usercontext);
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await apiInstance.get(`/product/filter/${category}/${subCategory}/${item}`)
+        if (authLoading) {
+          return;
+        }
+        console.log(user_id,role);
         
+        const response = await apiInstance.get(`/product/filter/${category}/${subCategory}/${item}`,{user_id,role})
+
         setItems(response.data.items)
       } catch (err) {
         setError(err.message)
@@ -24,7 +33,7 @@ const FilterByItems = () => {
       }
     }
     fetchItems()
-  }, [])
+  }, [authLoading])
 
   if (loading)
     return (
