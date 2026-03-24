@@ -10,7 +10,7 @@ router.post("/create-product",adminMiddleware, uploads.array("images", 5), creat
 
 router.get("/get-products",authMiddleware, getAllProductController);
 router.get("/product-detail/:product_id", authMiddleware, productDetailController);
-router.get("/search",searchProductController);
+router.get("/search",authMiddleware,searchProductController);
 router.get("/cart",authMiddleware, fetchProductFromCart);
 router.put("/cart/update", authMiddleware, updateCartQuantity);
 router.delete("/cart/delete/:id",authMiddleware, deleteCartItem);

@@ -151,7 +151,15 @@ const searchProductController = async (req, res) => {
       andConditions.push({ $or: orConditions })
     })
 
-    const products = await productModel.find({ $and: andConditions })
+    let filter = {
+      $and:andConditions
+    }
+
+    if (req.user.role == "seller") {
+      filter.createdBy=req.user._id;
+    }
+
+    const products = await productModel.find(filter)
 
     res.status(200).json({
       success: true,
