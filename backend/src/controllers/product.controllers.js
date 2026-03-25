@@ -397,7 +397,14 @@ const productDetailController = async (req, res) => {
       })
     }
 
-    const product = await productModel.findById(product_id)
+    let filter ={
+      _id:product_id
+    }
+
+    if (req.user.role =="seller") {
+      filter.createdBy=req.user._id;
+    }
+    const product = await productModel.find(filter)
     console.log(product)
 
     if (!product) {
