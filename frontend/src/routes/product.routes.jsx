@@ -19,7 +19,6 @@ const ProductRoutes = () => {
     <Routes>
       <Route path="all" element={<ViewAllProducts />} />
       <Route path="create" element={<CreateProduct />} />
-      <Route path="update/:product_id" element={<UpdateProduct />} />
       <Route path="detail/:product_id" element={<ViewProductDetail />} />
 
       <Route path="seller" element={<ViewAdminProducts />} />

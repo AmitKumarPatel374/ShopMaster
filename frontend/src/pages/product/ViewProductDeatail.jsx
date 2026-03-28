@@ -185,7 +185,7 @@ const ViewProductDetail = () => {
   const deleteHandler = async (id) => {
     try {
       const response = await apiInstance.delete(`/product/delete-product/${id}`)
-      toast.success(response.data.message)
+      toast.success(response.data.message) ;
       navigate(-1)
     } catch (error) {
       console.log("error in deleting->", error)
