@@ -87,7 +87,12 @@ const getOrderByIdController = async (req, res) => {
       })
     }
 
-    const order = await orderModel.findById(order_id)
+    let filter ={
+      _id:order_id,
+      seller_id:req.user._id
+    }
+
+    const order = await orderModel.find(filter)
 
     if (!order) {
       return res.status(400).json({
@@ -120,7 +125,21 @@ const updateOrderController = async (req, res) => {
       })
     }
 
-    const findOrder = await orderModel.findById({_id:order_id})
+    let filter ={
+      _id:order_id,
+      seller_id:req.user._id
+    }
+
+    console.log(filter);
+    
+
+    const findOrder = await orderModel.find(filter)
+    if(!findOrder){
+      return res.status(400).json({
+        message: "you are not seller for this product!",
+      })
+    }
+
     const customer = await UserModel.findById({_id:findOrder.userId});
 
     const order = await orderModel.findByIdAndUpdate(
