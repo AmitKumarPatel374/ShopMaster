@@ -10,6 +10,7 @@ const OrderUpdateForm = () => {
 
   const [loading, setLoading] = useState(true)
   const [order, setOrder] = useState(null)
+  const [orderNotFound, setorderNotFound] = useState(false)
 
   const [formData, setFormData] = useState({
     orderStatus: "",
@@ -21,22 +22,34 @@ const OrderUpdateForm = () => {
   const fetchOrder = async () => {
     try {
       const res = await apiInstance.get(`/order/admin/order/${order_id}`)
-      const data = res.data.order
-
+      const data = res.data.order[0]
+      console.log(data);
+      
       setOrder(data)
+      console.log(order);
+      
+      if (!data) {
+        setorderNotFound(true);
+      }
+      
 
       // Pre-fill form
       setFormData({
         orderStatus: data.orderStatus,
-        currentLocation: data.tracking.currentLocation,
+        currentLocation: data.tracking?.currentLocation || "",
         paymentStatus: data.paymentStatus,
       })
 
       setLoading(false)
     } catch (error) {
+      setorderNotFound(true)
+      setLoading(false)
       console.log("error fetching order", error)
     }
   }
+
+  console.log(orderNotFound);
+  
 
   useEffect(() => {
     fetchOrder()
@@ -54,6 +67,57 @@ const OrderUpdateForm = () => {
   }
 
   if (loading) return <p className="p-10 text-gray-700">Loading...</p>
+
+   if (orderNotFound) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen px-5 bg-gray-50">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+          alt="Unauthorized Access"
+          className="w-40 h-40 object-contain opacity-90"
+        />
+
+        <h1 className="text-3xl font-bold text-gray-800 mt-6 text-center">Unauthorized Access</h1>
+
+        <p className="text-gray-500 text-center mt-3 max-w-md leading-relaxed">
+          You are not authorized to access this order or this order does not belong to your account.
+        </p>
+
+        <div className="flex gap-4 mt-8 flex-wrap justify-center">
+          <button
+            onClick={() => navigate("/")}
+            className="
+        px-6
+        py-3
+        bg-black
+        text-white
+        rounded-xl
+        hover:bg-gray-800
+        transition-all
+      "
+          >
+            Go To Home
+          </button>
+
+          <button
+            onClick={() => navigate(-1)}
+            className="
+        px-6
+        py-3
+        border
+        border-gray-300
+        rounded-xl
+        hover:bg-gray-100
+        transition-all
+      "
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    )
+  }
+
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen flex justify-center">
