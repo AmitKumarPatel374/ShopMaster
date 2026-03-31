@@ -8,6 +8,7 @@ import AdminRoutes from "./admin.routes"
 import About from "../pages/public/About"
 import Home from "../pages/public/Home"
 import PageNotFound from "../pages/common/PageNotFound"
+import UnauthorizedPage from "../pages/common/UnauthorizedPage "
 
 
 const AppRoutes = () => {
@@ -25,6 +26,7 @@ const AppRoutes = () => {
       <Route path="/admin/*" element={<AdminRoutes />} />
 
       {/* Fallback */}
+      <Route path="/unauthorized" element={<UnauthorizedPage />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
