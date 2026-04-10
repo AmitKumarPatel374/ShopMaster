@@ -24,7 +24,7 @@ const ProductRoutes = () => {
       <Route
         path="create"
         element={
-          <ProtectedRoute role ="seller">
+          <ProtectedRoute role="seller">
             <CreateProduct />
           </ProtectedRoute>
         }
@@ -36,7 +36,11 @@ const ProductRoutes = () => {
 
       <Route
         path="seller"
-        element={<ViewAdminProducts />}
+        element={
+          <ProtectedRoute role="seller">
+            <ViewAdminProducts />
+          </ProtectedRoute>
+        }
       />
 
       <Route
