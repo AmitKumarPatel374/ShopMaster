@@ -15,10 +15,10 @@ const ViewAdminProducts = () => {
   const navigate = useNavigate()
   // const { role } = useContext(usercontext);
   // const { user_id } = useParams();
-  const { user_id } = useContext(usercontext)
+  const { user_id ,authLoading} = useContext(usercontext)
 
   useEffect(() => {
-    if (!user_id) return // wait until auth loads
+    if (authLoading) return // wait until auth loads
 
     const fetchProducts = async () => {
       try {
@@ -35,7 +35,7 @@ const ViewAdminProducts = () => {
     }
 
     fetchProducts()
-  }, [user_id])
+  }, [authLoading])
 
   const deleteHandler = async (id) => {
     try {
@@ -47,7 +47,7 @@ const ViewAdminProducts = () => {
     }
   }
 
-  if (loading) return <p className="text-center mt-10">Loading products...</p>
+  if (loading) return <p className="text-center mt-10">Loading products...and if takes more time refresh once</p>
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>
 
   const sliderSettings = {
