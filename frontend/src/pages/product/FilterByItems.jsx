@@ -12,18 +12,21 @@ const FilterByItems = () => {
   const { category, subCategory, item } = useParams()
   const navigate = useNavigate()
 
-  const {authLoading} = useContext(usercontext);
-  const {user_id} = useContext(usercontext);
-  const {role} = useContext(usercontext);
+  const { authLoading } = useContext(usercontext)
+  const { user_id } = useContext(usercontext)
+  const { role } = useContext(usercontext)
   useEffect(() => {
     const fetchItems = async () => {
       try {
         if (authLoading) {
-          return;
+          return
         }
-        console.log(user_id,role);
-        
-        const response = await apiInstance.get(`/product/filter/${category}/${subCategory}/${item}`,{user_id,role})
+        console.log(user_id, role)
+
+        const response = await apiInstance.get(
+          `/product/filter/${category}/${subCategory}/${item}`,
+          { user_id, role }
+        )
 
         setItems(response.data.items)
       } catch (err) {
