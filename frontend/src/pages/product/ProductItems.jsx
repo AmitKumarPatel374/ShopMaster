@@ -16,7 +16,7 @@ const ProductItems = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await apiInstance.get(`/product/${category}/${subCategory}/${item}`)
+        const response = await apiInstance.get(`/product/${category}/${subCategory}/${item}`);
         setItems(response.data.items)
       } catch (err) {
         setError(err.message)
