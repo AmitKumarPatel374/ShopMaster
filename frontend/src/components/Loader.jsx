@@ -1,6 +1,6 @@
 import React from "react"
 
-const Loader = ({ text = "Fetching Orders..." }) => {
+const Loader = ({ text}) => {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-black/20 backdrop-blur-sm z-50">
       {/* Animated Ring */}

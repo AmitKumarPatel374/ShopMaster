@@ -4,6 +4,7 @@ import apiInstance from "../../config/apiInstance"
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
+import Loader from "../../components/Loader"
 
 const ProductItems = () => {
   const [items, setItems] = useState([])
@@ -28,9 +29,7 @@ const ProductItems = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-600 text-lg font-medium animate-pulse">Loading products...</p>
-      </div>
+      <Loader fullscreen text="Loading Producs..." />
     )
 
   if (error)

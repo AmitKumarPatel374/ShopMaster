@@ -6,6 +6,7 @@ import { usercontext } from "../../context/DataContext"
 import { toast } from "react-toastify"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import Loader from "../../components/Loader"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -96,9 +97,7 @@ const Profile = () => {
   // Loading / Error States
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100">
-        <p className="text-lg font-medium text-gray-600 animate-pulse">Loading your profile...</p>
-      </div>
+       <Loader fullscreen text="Loading Your Profile..." />
     )
 
   if (error)

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import apiInstance from "../../config/apiInstance"
 import { useParams } from "react-router-dom"
 import { CheckCircle, MapPin, Truck, Home } from "lucide-react"
+import Loader from "../../components/Loader"
 
 const TrackOrder = () => {
   const { order_id } = useParams()
@@ -22,9 +23,7 @@ const TrackOrder = () => {
 
   if (!order) {
     return (
-      <div className="flex justify-center items-center min-h-screen text-gray-600 text-xl">
-        Loading tracking details...
-      </div>
+      <Loader fullscreen text="Loading Tracking details..." />
     )
   }
 

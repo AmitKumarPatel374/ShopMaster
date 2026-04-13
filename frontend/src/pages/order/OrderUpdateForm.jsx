@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import apiInstance from "../../config/apiInstance"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
+import Loader from "../../components/Loader"
 
 const OrderUpdateForm = () => {
   const { order_id } = useParams()
@@ -66,7 +67,7 @@ const OrderUpdateForm = () => {
     }
   }
 
-  if (loading) return <p className="p-10 text-gray-700">Loading...</p>
+  if (loading) return <Loader fullscreen text="Loading..." />
 
    if (orderNotFound) {
     return (

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Loader from "../../components/Loader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -145,11 +146,7 @@ const UpdateProfile = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-indigo-100 via-white to-blue-100">
-        <p className="text-lg font-semibold text-gray-600 animate-pulse">
-          Loading...
-        </p>
-      </div>
+       <Loader fullscreen text="Loading..." />
     );
 
   if (error)

@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { usercontext } from "../../context/DataContext"
 import { toast } from "react-toastify"
 import NavbarFilter from "../../components/NavbarFilter"
+import Loader from "../../components/Loader"
 
 const ViewAdminProducts = () => {
   const [products, setProducts] = useState([])
@@ -47,7 +48,9 @@ const ViewAdminProducts = () => {
     }
   }
 
-  if (loading) return <p className="text-center mt-10">Loading products...and if takes more time refresh once</p>
+  if (loading) {
+    return <Loader fullscreen text="Loading products...and if takes more time refresh once" />
+  }
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>
 
   const sliderSettings = {

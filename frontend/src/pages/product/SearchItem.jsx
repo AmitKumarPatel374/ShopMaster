@@ -1,3 +1,4 @@
+import Loader from "../../components/Loader"
 import ItemPageComponent from "../../components/ItemPageComponent"
 import NavbarFilter from "../../components/NavbarFilter"
 import apiInstance from "../../config/apiInstance"
@@ -29,9 +30,7 @@ const SearchItem = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-600 text-lg font-medium animate-pulse">Loading products...</p>
-      </div>
+       <Loader fullscreen text="Loading Producs..." />
     )
 
   if (error)

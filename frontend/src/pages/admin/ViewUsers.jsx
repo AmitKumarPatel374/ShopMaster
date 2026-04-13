@@ -4,6 +4,7 @@ import apiInstance from "../../config/apiInstance"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { User, Mail, Shield } from "lucide-react"
+import Loader from "../../components/Loader"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -59,9 +60,7 @@ const ViewUsers = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-100">
-        <p className="text-lg font-semibold text-gray-700 animate-pulse">Loading users...</p>
-      </div>
+      <Loader fullscreen text="Loading users..." />
     )
   }
 
