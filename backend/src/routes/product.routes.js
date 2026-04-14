@@ -15,7 +15,7 @@ router.get("/cart",authMiddleware, fetchProductFromCart);
 router.put("/cart/update", authMiddleware, updateCartQuantity);
 router.delete("/cart/delete/:id",authMiddleware, deleteCartItem);
 router.get("/:category",authMiddleware,getProductByCategoryController);
-router.get("/:category/:subCategory/:item",getProductByItemCategoryController);
+router.get("/:category/:subCategory/:item",authMiddleware,getProductByItemCategoryController);
 router.get("/filter/:category/:subCategory/:item",authMiddleware,getProductByItemCategoryController);
 
 
