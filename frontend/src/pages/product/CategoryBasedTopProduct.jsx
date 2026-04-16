@@ -2,21 +2,38 @@ import React, { useEffect, useState } from "react"
 import { productByCateGory } from "../../Service/ProductFilterByCategoryService"
 import { useNavigate, useParams } from "react-router-dom"
 import NavbarFilter from "../../components/NavbarFilter"
+import Loader from "../../components/Loader"
 
 const CategoryBasedTopProduct = () => {
   const { category } = useParams()
   const navigate = useNavigate()
 
   const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await productByCateGory(category)
-      setProducts(response || [])
-      console.log(response)
+      try {
+        const response = await productByCateGory(category)
+        setProducts(response || [])
+        console.log(response)
+      } catch (error) {
+        setError(error.message);
+      }finally{
+        setLoading(false);
+      }
     }
     fetchData()
   }, [category])
+
+  if (error) {
+    return <p>error</p>
+  }
+
+  if (loading) {
+    return <Loader fullscreen text="Loading Products....." />
+  }
 
   return (
     <div className="flex flex-col">
